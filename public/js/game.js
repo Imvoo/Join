@@ -182,6 +182,9 @@ function CreatePlayer(newID) {
         }
     });
 
+	console.log("---------");
+	console.log(allPlayers);
+
     UpdateHeaderText();
 }
 
