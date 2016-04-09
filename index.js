@@ -74,9 +74,9 @@ io.on('connection', function(socket) {
     });
 
 	// NETCODE TOO HARD FOR ME :'(
-	// setInterval(function() {
-	// 	socket.emit("player positions", positions)
-	// }, 1000);
+	setInterval(function() {
+		io.emit("player positions", positions)
+	}, 250);
 });
 
 http.listen(2345, function() {

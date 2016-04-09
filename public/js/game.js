@@ -99,7 +99,7 @@ var SetupIOConnections = function() {
 	socket.on('deadList', UpdateDeadlist);
 
 	// Netcode is really bad atm...
-	// socket.on('player positions', UpdatePositions);
+	socket.on('player positions', UpdatePositions);
 }
 
 function UpdateDeadlist(newID) {
@@ -212,7 +212,7 @@ function update() {
 		socket.emit('player death', id);
 	}
 
-    // socket.emit('position', [id, character.x, character.y]);
+    socket.emit('position', [id, character.x, character.y]);
 }
 
 function Jump(object) {
