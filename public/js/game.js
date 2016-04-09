@@ -96,7 +96,7 @@ function create() {
 
 var SetupIOConnections = function() {
     socket.on('players', CreatePlayer);
-    socket.on('kill player', DeletePlayer);
+    socket.on('delete player', DeletePlayer);
     socket.on('jump', JumpPlayer);
 	socket.on('player death', KillPlayer);
 	socket.on('start', StartGame);
@@ -185,9 +185,9 @@ function UpdateHeaderText() {
     textJoin.x = screenWidth - 10 - textJoin.width;
 }
 
-function DeletePlayer(id) {
+function DeletePlayer(newID) {
     for (var i = 0; i < allPlayers.length; i++) {
-        if (allPlayers[i][0] == id[0]) {
+        if (allPlayers[i][0] == newID[0]) {
             allPlayers[i][1].kill();
             allPlayers.pop(i);
             break;
