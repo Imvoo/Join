@@ -73,7 +73,7 @@ function create() {
 
 	PositionWalls(walls);
 
-    allPlayers.push([id, character]);
+    allPlayers.push([id, character, shift+30]);
     character.body.setCollisionGroup(playerCollisionGroup);
 
 	socket.emit('new player', [id, 30+shift]);
@@ -107,7 +107,7 @@ function CreatePlayer(newID) {
         if (hasDone == false) {
             var newChar = game.add.sprite(singleID[1], 200, "char");
             game.physics.p2.enable(newChar);
-            allPlayers.push([singleID, newChar]);
+            allPlayers.push([singleID[0], newChar, singleID[1]]);
             newChar.body.setRectangle(0,0);
             newChar.body.setCollisionGroup(playerCollisionGroup);
 			newChar.body.fixedRotation = true;
