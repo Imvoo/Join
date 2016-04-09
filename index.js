@@ -14,6 +14,8 @@ app.use(express.static('public'));
 
 io.on('connection', function(socket) {
     console.log("user conn");
+    console.log("users:");
+    console.log(players);
     allSockets.push(socket);
     socket.emit('players', players);
     
