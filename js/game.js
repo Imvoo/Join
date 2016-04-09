@@ -7,6 +7,10 @@ var textJoin;
 var character;
 var keyInput;
 
+var style = { font: "20px Arial", fill:"Black" };
+
+var deathText;
+
 var walls = [];
 var wallsGap = 150;
 var wallSpeed = 5;
@@ -29,7 +33,6 @@ function create() {
 	game.input.addPointer();
 		
 	var text = "// Join | Click up arrow to jump!";
-	var style = { font: "20px Arial", fill:"Black" };
 	
 	textJoin = game.add.text(game.world.width - 10, 10, text, style);
 	textJoin.x -= textJoin.width;
@@ -53,22 +56,9 @@ function create() {
 	
 	walls.forEach(function (item) {
 		item.width = 50;
-		// item.physicsBodyType = Phaser.Physics.P2JS;
-		// game.physics.p2.enable(item, false);
-		// item.body.setCollisionGroup(wallsCollisionGroup);
-		// item.body.motionState = 2;
-		// item.body.data.gravityScale = 0;
-		// item.body.fixedRotation = true;
-		// item.body.static = true;
-		// item.body.setCollisionGroup(wallsCollisionGroup);
-		// item.body
 	});
 	
 	PositionWalls(walls);
-
-	
-	
-	// game.physics.p2.updateBoundsCollisionGroup();
 }
 
 function update() {	
@@ -77,6 +67,13 @@ function update() {
 	}
 	
 	MoveWalls(walls);
+	
+	var collided = CheckCollision();
+	if (collided == true) {  
+		var style = { font: "20px Arial", fill:"Black" };
+		deathText = game.add.text(0,0,"You have died!",style);
+		character.kill();
+	}
 }
 
 function Jump(object) {
@@ -102,18 +99,33 @@ function PositionWalls(walls) {
 	walls[1].x = screenWidth + 50;
 }
 
-// function MoveText() {
-// 	if (t.x > 0 && t.moveLeft) {
-// 		t.x -= 5
-// 	}
-// 	else {
-// 		t.moveLeft = false;
-// 	}
+function CheckCollision() {
+	var corners = GetCorners(character);
+	var finished = false;
+
+	walls.forEach(function(item) {
+		var boxCorners = GetNormalCorners(item);
+		
+		for (var i = 0; i < 4; i++) {
+			if (finished == false) {
+				if (corners[i][0] > boxCorners[0] &&
+				corners[i][0] < boxCorners[1] && 
+				corners[i][1] > boxCorners[2] && 
+				corners[i][1] < boxCorners[3]) {
+							finished = true;
+						}
+			}
+		}
+	});
 	
-// 	if (t.moveLeft == false) {
-// 		t.x += 5
-// 		if (t.x + t.width > 800) {
-// 			t.moveLeft = true;
-// 		}
-// 	}    
-// }
+	return finished;
+}
+
+function GetCorners(item) {
+	var corners = [[item.x, item.y], [item.x + item.width, item.y], [item.x, item.y + item.height], [item.x + item.width, item.y + item.height]]; 
+	return corners
+}
+
+function GetNormalCorners(item) {
+	return [item.x, item.x + item.width, item.y, item.y + item.height]
+}
