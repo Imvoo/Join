@@ -6,6 +6,7 @@ var screenWidth = 800;
 var screenHeight = 600;
 
 var game = new Phaser.Game(screenWidth, screenHeight, Phaser.CANVAS, '', { preload: preload, create:create, update:update });
+var background;
 
 var textJoin;
 var character;
@@ -23,9 +24,11 @@ var playerCollisionGroup;
 
 var allPlayers = [];
 
+var start = false;
+
 function preload() {
 	game.load.image("char", "../img/turkey_small.png");
-	game.load.image("background", "../img/background.png");
+	game.load.image("background", "../img/background-real2x.png");
 	game.load.image("wall", "../img/wall.png");
 }
 
@@ -34,7 +37,8 @@ function create() {
 
 	game.stage.disableVisibilityChange = true;
 	game.stage.backgroundColor = "#ffffff";
-	game.add.image(0, 0, "background");
+	// game.add.image(0, 0, "background");
+	background = game.add.tileSprite(0,0,800,600,'background');
 
 	game.physics.startSystem(Phaser.Physics.P2JS);
 	game.physics.p2.defaultRestitution = 0;
@@ -87,7 +91,14 @@ var SetupIOConnections = function() {
     socket.on('kill player', DeletePlayer);
     socket.on('jump', JumpPlayer);
 	socket.on('player death', KillPlayer);
-	socket.on('player positions', UpdatePositions);
+	socket.on('start', StartGame);
+
+	// Netcode is really bad atm...
+	// socket.on('player positions', UpdatePositions);
+}
+
+function StartGame() {
+	start = true;
 }
 
 function UpdatePositions(data) {
@@ -158,6 +169,12 @@ function DeletePlayer(id) {
 }
 
 function update() {
+	background.x -= 2;
+
+	if (start == true) {
+		MoveWalls(walls);
+	}
+
 	if ((keyInput.up.isDown || game.input.pointer1.isDown) && character.isJumping == false) {
 		Jump(character);
 		character.isJumping = true;
@@ -178,7 +195,7 @@ function update() {
 		socket.emit('player death', id);
 	}
 
-    socket.emit('position', [id, character.x, character.y]);
+    // socket.emit('position', [id, character.x, character.y]);
 }
 
 function Jump(object) {

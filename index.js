@@ -9,8 +9,11 @@ var positions = [];
 
 var stdin = process.openStdin();
 stdin.addListener("data", function(d) {
-    players.push(d);
-    io.emit("players", players)
+	if (d == "start") {
+		io.emit("start");
+	}
+    // players.push(d);
+    // io.emit("players", players)
 });
 
 app.get('/', function(req, res) {
@@ -66,9 +69,10 @@ io.on('connection', function(socket) {
         io.emit("kill player", playerID);
     });
 
-	setInterval(function() {
-		socket.emit("player positions", positions)
-	}, 1000);
+	// NETCODE TOO HARD FOR ME :'(
+	// setInterval(function() {
+	// 	socket.emit("player positions", positions)
+	// }, 1000);
 });
 
 http.listen(2345, function() {
