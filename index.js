@@ -9,8 +9,9 @@ var positions = [];
 
 var stdin = process.openStdin();
 stdin.addListener("data", function(d) {
+	console.log("message: " + d);
 	if (d == "start") {
-		io.emit("start");
+		io.emit("start", null);
 	}
     // players.push(d);
     // io.emit("players", players)

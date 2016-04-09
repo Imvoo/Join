@@ -169,7 +169,7 @@ function DeletePlayer(id) {
 }
 
 function update() {
-	background.x -= 2;
+	background.tilePosition.x -= 2;
 
 	if (start == true) {
 		MoveWalls(walls);
@@ -204,7 +204,7 @@ function Jump(object) {
 
 function MoveWalls(walls) {
 	walls.forEach(function (item) {
-		// item.x -= wallSpeed;
+		item.x -= wallSpeed;
 	});
 
 	if (walls[0].x + walls[0].width < 0) {
