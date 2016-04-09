@@ -17,6 +17,10 @@ function create() {
 	game.stage.backgroundColor = "#ffffff";
 	game.add.image(0, 0, "background");
 		
+	game.physics.startSystem(Phaser.Physics.P2JS);
+	game.physics.p2.defaultRestitution = 0;
+	game.physics.p2.gravity.y = 980;
+		
 	var text = "Hello world!";
 	var style = { font: "60px   Arial", fill:"Black" };
 	
@@ -24,6 +28,7 @@ function create() {
 	t.moveLeft = true;
 	
 	character = game.add.sprite(200, 200, "char");
+	game.physics.p2.enable(character);
 	character.body.fixedRotation = true;
 	
 	keyInput = game.input.keyboard.createCursorKeys();
@@ -33,8 +38,13 @@ function create() {
 function update() {
 	MoveText();
 	
-	
-	
+	if (keyInput.up.isDown) {
+		Jump(character);
+	}
+}
+
+function Jump(object) {
+	object.body.velocity.y = -400;
 }
 
 function MoveText() {
