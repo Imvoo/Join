@@ -9,14 +9,17 @@ var positions = [];
 var deadList = [];
 
 var stdin = process.openStdin();
-stdin.addListener("data", function(d) {
-	if (d == "start") {
-		console.log("start da game");
-		io.emit("start");
-	}
-    // players.push(d);
-    // io.emit("players", players)
-});
+var listener = function() {
+	stdin.addListener("data", function(d) {
+		console.log("." + d);
+		if (d == "start") {
+			console.log("start da game");
+			io.emit("start");
+		}
+		// players.push(d);
+		// io.emit("players", players)
+	});
+};
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
@@ -90,4 +93,5 @@ io.on('connection', function(socket) {
 
 http.listen(2345, function() {
    console.log("Listening on :2345.");
+   listener();
 });
