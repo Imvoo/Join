@@ -9,6 +9,10 @@ app.get('/', function(req, res) {
 
 app.use(express.static('public'));
 
+io.on('connection', function(socket) {
+    console.log("user conn");
+});
+
 http.listen(2345, function() {
    console.log("Listening on :2345."); 
 });
