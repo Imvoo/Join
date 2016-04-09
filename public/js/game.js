@@ -117,7 +117,6 @@ function UpdatePositions(data) {
 function KillPlayer(newID) {
     for (var i = 0; i < allPlayers.length; i++) {
 		if (allPlayers[i][0] == newID) {
-			console.log("le kill me = " + id + " u is " + allPlayers[i][0]);
             allPlayers[i][1].kill();
             break;
         }
