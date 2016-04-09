@@ -19,6 +19,7 @@ var walls = [];
 var wallsGap = 150;
 var wallSpeed = 5;
 
+
 var allPlayers = [];
 
 function preload() {
@@ -72,8 +73,8 @@ function create() {
 
 function CreatePlayer(id) {
     var newChar = game.add.sprite(200, 200, "char");
-    game.physics.p2.enable(newChar);
-    newChar.body.fixedRotation(true);
+    // game.physics.p2.enable(newChar);
+    // newChar.body.fixedRotation(true);
     
     allPlayers.push([id, newChar]);
 }
@@ -82,7 +83,6 @@ function DeletePlayer(id) {
     allPlayers.forEach(function(player) {
        if (player[0] == id) {
            player[1].kill();
-           break;
        } 
     });
 }
