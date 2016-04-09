@@ -69,8 +69,7 @@ io.on('connection', function(socket) {
 		socket.broadcast.emit('player death', id);
 	});
 
-	socket.on('disconnect', function(data) {
-		console.log(data);
+	socket.on('disconnect', function() {
 		var result = null;
 		for (var i = 0; i < players.length; i++) {
 			if (socket.id == players[i][0]) {
@@ -84,6 +83,8 @@ io.on('connection', function(socket) {
 		socket.broadcast.emit("delete player", result);
 		console.log("dcd: " + result);
 		console.log(players);
+		console.log(socket);
+		console.log(socket.request);
 	});
 
 	// NETCODE TOO HARD FOR ME :'(
