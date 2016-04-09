@@ -9,7 +9,7 @@ var keyInput;
 
 var walls = [];
 var wallsGap = 150;
-var wallSpeed = 3;
+var wallSpeed = 5;
 
 function preload() {
 	game.load.image("char", "../img/circle.png");
@@ -37,19 +37,38 @@ function create() {
 	character = game.add.sprite(200, 200, "char");
 	game.physics.p2.enable(character);
 	character.body.fixedRotation = true;
+	character.body.gravity.y = 960;
 	
 	keyInput = game.input.keyboard.createCursorKeys();
 	
-	wall1 = game.add.sprite(700, 100, "wall");
-	wall2 = game.add.sprite(700, 100, "wall");
+	// Collision groups!
+	var playerCollisionGroup = game.physics.p2.createCollisionGroup();
+	var wallsCollisionGroup = game.physics.p2.createCollisionGroup();
+	
+	
+	wall1 = game.add.sprite(700, 50, "wall");
+	wall2 = game.add.sprite(700, 50, "wall");
 	
 	walls.push(wall1, wall2);
 	
 	walls.forEach(function (item) {
 		item.width = 50;
+		// item.physicsBodyType = Phaser.Physics.P2JS;
+		// game.physics.p2.enable(item, false);
+		// item.body.setCollisionGroup(wallsCollisionGroup);
+		// item.body.motionState = 2;
+		// item.body.data.gravityScale = 0;
+		// item.body.fixedRotation = true;
+		// item.body.static = true;
+		// item.body.setCollisionGroup(wallsCollisionGroup);
+		// item.body
 	});
 	
 	PositionWalls(walls);
+
+	
+	
+	// game.physics.p2.updateBoundsCollisionGroup();
 }
 
 function update() {	
@@ -75,7 +94,7 @@ function MoveWalls(walls) {
 }
 
 function PositionWalls(walls) {
-	var randAmount = Math.floor((screenHeight - 50) * Math.random());
+	var randAmount = Math.floor((screenHeight - 200) * Math.random());
 	walls[0].y = 50 + randAmount - walls[0].height;
 	walls[1].y = randAmount + wallsGap;
 	
