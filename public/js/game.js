@@ -111,6 +111,8 @@ function CreatePlayer(newID) {
             newChar.body.setCollisionGroup(playerCollisionGroup);
         }
     });
+    
+    textJoin.text = "// Join | Click up arrow to jump! | Connected: " + allPlayers.length.toString();
 }
 
 function DeletePlayer(id) {
@@ -124,6 +126,7 @@ function DeletePlayer(id) {
             break;
         }
     }
+    textJoin.text = "// Join | Click up arrow to jump! | Connected: " + allPlayers.length.toString();
 }
 
 function update() {	
