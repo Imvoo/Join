@@ -31,7 +31,6 @@ function preload() {
 
 function create() {
     socket = io.connect("http://167.160.162.247:2345");
-    socket.emit('new player', id);
 
 	game.stage.disableVisibilityChange = true;
 	game.stage.backgroundColor = "#ffffff";
@@ -48,7 +47,9 @@ function create() {
 	textJoin = game.add.text(game.world.width - 10, 10, text, style);
 	textJoin.x -= textJoin.width;
 
-	character = game.add.sprite(200, 200, "char");
+	var shift = Math.floor(Math.random(170));
+
+	character = game.add.sprite(30 + shift, 200, "char");
 	game.physics.p2.enable(character);
 	character.body.fixedRotation = true;
 	character.body.setRectangle(0,0);
@@ -75,6 +76,8 @@ function create() {
     allPlayers.push([id, character]);
     character.body.setCollisionGroup(playerCollisionGroup);
 
+	socket.emit('new player', [id, 30+shift]);
+
     SetupIOConnections();
 }
 
@@ -97,18 +100,17 @@ function CreatePlayer(newID) {
     newID.forEach(function(singleID) {
         var hasDone = false;
         allPlayers.forEach(function(oldID) {
-            console.log("aP " + oldID);
-           if (singleID == oldID[0]) {
+           if (singleID[0] == oldID[0]) {
                hasDone = true;
            }
         });
         if (hasDone == false) {
-            var newChar = game.add.sprite(200, 200, "char");
+            var newChar = game.add.sprite(singleID[1], 200, "char");
             game.physics.p2.enable(newChar);
-            // newChar.body.fixedRotation(true);
             allPlayers.push([singleID, newChar]);
             newChar.body.setRectangle(0,0);
             newChar.body.setCollisionGroup(playerCollisionGroup);
+			newChar.body.fixedRotation = true;
         }
     });
 
@@ -121,10 +123,7 @@ function UpdateHeaderText() {
 }
 
 function DeletePlayer(id) {
-    console.log(id);
-    console.log(allPlayers);
     for (var i = 0; i < allPlayers.length; i++) {
-        console.log(allPlayers[i][0], id);
         if (allPlayers[i][0] == id) {
             allPlayers[i][1].kill();
             allPlayers.pop(i);
