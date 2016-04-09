@@ -72,7 +72,7 @@ io.on('connection', function(socket) {
 
 	socket.on('disconnect', function() {
 		var i = 0;
-		var result;
+		var result = null;
 
 		allSockets.forEach(function(newSocket) {
 			if (socket.id == newSocket.id) {
