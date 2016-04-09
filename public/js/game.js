@@ -136,7 +136,7 @@ function DeletePlayer(id) {
 }
 
 function update() {
-	if ((keyInput.up.isDown || game.input.pointer1.isDown) && isJumping == false) {
+	if ((keyInput.up.isDown || game.input.pointer1.isDown) && character.isJumping == false) {
 		Jump(character);
 		character.isJumping = true;
         socket.emit('jump', id);
