@@ -155,6 +155,7 @@ function CreatePlayer(newID) {
         var hasDone = false;
 		var isDead = false;
         allPlayers.forEach(function(oldID) {
+		   console.log(singleID, oldID);
            if (singleID[0] == oldID[0]) {
                hasDone = true;
            }
@@ -173,7 +174,6 @@ function CreatePlayer(newID) {
 
 			console.log("created");
 			console.log(singleID);
-			console.log(oldID);
 
 			if (isDead) {
 				newChar.kill();
