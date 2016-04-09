@@ -6,6 +6,8 @@ app.get('/', function(req, res) {
     res.sendfile('index.html'); 
 });
 
+app.use(express.static('public'));
+
 http.listen(2345, function() {
    console.log("Listening on :2345."); 
 });
