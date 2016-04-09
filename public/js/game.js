@@ -151,6 +151,7 @@ function JumpPlayer(newID) {
 }
 
 function CreatePlayer(newID) {
+	console.log(newID);
     newID.forEach(function(singleID) {
 		singleID = singleID[1];
         var hasDone = false;
