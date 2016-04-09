@@ -47,7 +47,7 @@ function create() {
 	textJoin = game.add.text(game.world.width - 10, 10, text, style);
 	textJoin.x -= textJoin.width;
 
-	var shift = Math.floor(Math.random(170));
+	var shift = Math.floor(Math.random() * 170);
 
 	character = game.add.sprite(30 + shift, 200, "char");
 	game.physics.p2.enable(character);
