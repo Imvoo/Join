@@ -99,6 +99,7 @@ function CreatePlayer(newID) {
 
 function DeletePlayer(id) {
     for (var i = 0; i < allPlayers.length; i++) {
+        console.log(allPlayers[i][0], id);
         if (allPlayers[i][0] == id) {
             allPlayers[i][1].kill();
             allPlayers.pop(i);
