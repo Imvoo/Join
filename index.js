@@ -21,8 +21,8 @@ app.use(express.static('public'));
 io.on('connection', function(socket) {
     console.log("user conn");
     console.log("users:");
-    console.log(players);
     allSockets.push(socket);
+    console.log(players);
     socket.emit('players', players);
     
     socket.on('new player', function(id) {

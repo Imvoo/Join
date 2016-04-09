@@ -84,6 +84,8 @@ function CreatePlayer(newID) {
     console.log("SAW SOMEONE");
     console.log("me: ", id);
     allPlayers.push([newID]);
+    console.log(newID);
+    console.log(allPlayers);
 }
 
 function DeletePlayer(id) {
