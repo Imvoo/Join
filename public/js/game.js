@@ -88,6 +88,7 @@ function CreatePlayer(newID) {
 
 function DeletePlayer(id) {
     allPlayers.forEach(function(player) {
+        console.log("finding, " + player[0]);
        if (player[0] == id) {
            player[1].kill();
        } 
@@ -107,6 +108,8 @@ function update() {
 		deathText = game.add.text(0,0,"You have died!",style);
 		character.kill();
 	}
+    
+    socket.emit('position', { id: id, x: character.x, y: character.y});
 }
 
 function Jump(object) {
