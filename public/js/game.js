@@ -134,7 +134,7 @@ function UpdatePositions(data) {
 
 function KillPlayer(newID) {
     for (var i = 0; i < allPlayers.length; i++) {
-		if (allPlayers[i][0] == newID[0]) {
+		if (allPlayers[i][0] == newID) {
             allPlayers[i][1].kill();
             break;
         }
@@ -187,7 +187,7 @@ function UpdateHeaderText() {
 
 function DeletePlayer(id) {
     for (var i = 0; i < allPlayers.length; i++) {
-        if (allPlayers[i][0] == id) {
+        if (allPlayers[i][0] == id[0]) {
             allPlayers[i][1].kill();
             allPlayers.pop(i);
             break;
