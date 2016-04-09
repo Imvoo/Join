@@ -53,7 +53,7 @@ io.on('connection', function(socket) {
 	});
 
 	socket.on('player death', function(id) {
-		socket.emit("player death", id);
+		socket.emit('player death', id);
 	});
 
     socket.on('disconnect', function() {

@@ -24,7 +24,7 @@ var playerCollisionGroup;
 
 var allPlayers = [];
 
-var start = false;
+var start;
 
 function preload() {
 	game.load.image("char", "../img/turkey_small.png");
@@ -33,6 +33,8 @@ function preload() {
 }
 
 function create() {
+	start = false;
+
     socket = io.connect("http://167.160.162.247:2345");
 
 	game.stage.disableVisibilityChange = true;
@@ -113,8 +115,10 @@ function UpdatePositions(data) {
 }
 
 function KillPlayer(id) {
+	console.log(id);
     for (var i = 0; i < allPlayers.length; i++) {
-        if (allPlayers[i][0] == id) {
+        console.log(".. " + allPlayers[i][0] + " .. " + id);
+		if (allPlayers[i][0] == id) {
             allPlayers[i][1].kill();
             break;
         }
