@@ -194,8 +194,9 @@ function UpdateHeaderText() {
 }
 
 function DeletePlayer(newID) {
+	console.log("D " + newID);
     for (var i = 0; i < allPlayers.length; i++) {
-		if (allPlayers[i][0] == newID[0]) {
+		if (allPlayers[i][0] == newID[1]) {
             allPlayers[i][1].kill();
             allPlayers.pop(i);
             break;
