@@ -28,7 +28,7 @@ var playerCollisionGroup;
 
 var allPlayers = [];
 
-var startGameNow = false;
+var startGameNow;
 
 function preload() {
 	game.load.image("char", "../img/turkey_small.png");
@@ -37,6 +37,8 @@ function preload() {
 }
 
 function create() {
+	randAmount = 200;
+
     socket = io.connect("http://167.160.162.247:2345");
 
 	game.stage.disableVisibilityChange = true;
@@ -115,6 +117,7 @@ function UpdateDeadlist(newID) {
 }
 
 function StartGame(arg) {
+	console.log("startin");
 	startGameNow = true;
 }
 
