@@ -37,9 +37,9 @@ setInterval(function() {
 io.on('connection', function(socket) {
 	socket.emit('deadList', deadList);
 	socket.emit('players', players);
+	allSockets.push(socket);
 
 	socket.on('new player', function(id) {
-		allSockets.push(socket);
 		players.push(id);
 		io.emit('players', players);
 	});
@@ -89,7 +89,7 @@ io.on('connection', function(socket) {
 		// 		playerID = players.pop(j);
 		// 	}
 		// };
-		io.emit("delete player", playerID);
+		socket.broadcast.emit("delete player", playerID);
 		console.log("dcd: " + playerID);
 	});
 

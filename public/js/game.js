@@ -173,6 +173,7 @@ function CreatePlayer(newID) {
 
 			console.log("created");
 			console.log(singleID);
+			console.log(oldID);
 
 			if (isDead) {
 				newChar.kill();
