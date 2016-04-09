@@ -13,9 +13,9 @@ function create() {
     game.stage.disableVisibilityChange = true;
     
     var text = "Hello world!";
-    var style = { font: "60px Arial", fill:"White" };
+    var style = { font: "60px   Arial", fill:"White" };
     
-    t = game.add.text(game.world.centerX, screen.height/2, text, style);
+    t = game.add.text(game.world.centerX, screenHeight/2, text, style);
     t.moveLeft = true;
 }
 
