@@ -71,6 +71,7 @@ io.on('connection', function(socket) {
 	});
 
     socket.on('disconnect', function() {
+		console.log("dc");
         var i = 0;
         var result;
         allSockets.forEach(function(newSocket) {
@@ -82,6 +83,7 @@ io.on('connection', function(socket) {
         allSockets.pop(i);
         var playerID = players.pop(i);
         io.emit("kill player", playerID);
+		console.log("kill " + playerID);
     });
 
 	// NETCODE TOO HARD FOR ME :'(
