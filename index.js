@@ -68,7 +68,7 @@ io.on('connection', function(socket) {
 
 	setInterval(function() {
 		socket.emit("player positions", positions)
-	}, 250);
+	}, 1000);
 });
 
 http.listen(2345, function() {

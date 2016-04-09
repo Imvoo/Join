@@ -93,7 +93,7 @@ var SetupIOConnections = function() {
 function UpdatePositions(data) {
 	data.forEach(function(row) {
 		allPlayers.forEach(function(player) {
-			if (row[0] == player[0]) {
+			if (row[0] == player[0] && row[0] != id) {
 				player[1].body.x = row[1];
 				player[1].body.y = row[2];
 			}
