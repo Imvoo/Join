@@ -74,7 +74,7 @@ io.on('connection', function(socket) {
 		var result;
 
 		allSockets.forEach(function(newSocket) {
-			if (socket == newSocket) {
+			if (socket.id == newSocket.id) {
 				result = i;
 			}
 			i += 1;
