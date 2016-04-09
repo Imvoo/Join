@@ -35,6 +35,7 @@ setInterval(function() {
 }, 5000);
 
 io.on('connection', function(socket) {
+	socket.emit('identify', socket.id);
 	socket.emit('deadList', deadList);
 	socket.emit('players', players);
 

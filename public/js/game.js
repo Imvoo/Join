@@ -104,9 +104,14 @@ var SetupIOConnections = function() {
 	socket.on('start', StartGame);
 	socket.on('deadList', UpdateDeadlist);
 	socket.on('gap update', UpdateGap);
+	socket.on('identify', Identify);
 
 	// Netcode is really bad atm...
 	// socket.on('player positions', UpdatePositions);
+}
+
+function Identify(id) {
+	console.log(id);
 }
 
 function UpdateGap(gapRange) {
@@ -151,7 +156,6 @@ function JumpPlayer(newID) {
 }
 
 function CreatePlayer(newID) {
-	console.log(newID);
     newID.forEach(function(singleID) {
 		singleID = singleID[1];
         var hasDone = false;
