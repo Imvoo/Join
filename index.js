@@ -6,6 +6,7 @@ var io = require('socket.io')(http);
 var allSockets = [];
 var players = [];
 var positions = [];
+var deadList = [];
 
 var stdin = process.openStdin();
 stdin.addListener("data", function(d) {
@@ -25,6 +26,7 @@ app.use(express.static('public'));
 
 io.on('connection', function(socket) {
     allSockets.push(socket);
+	socket.emit('deadList', deadList);
     socket.emit('players', players);
 
     socket.on('new player', function(id) {
@@ -53,6 +55,7 @@ io.on('connection', function(socket) {
 	});
 
 	socket.on('player death', function(id) {
+		deadList.push(id);
 		socket.broadcast.emit('player death', id);
 	});
 

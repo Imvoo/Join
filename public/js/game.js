@@ -20,6 +20,8 @@ var walls = [];
 var wallsGap = 150;
 var wallSpeed = 5;
 
+var deadList = [];
+
 var playerCollisionGroup;
 
 var allPlayers = [];
@@ -94,9 +96,14 @@ var SetupIOConnections = function() {
     socket.on('jump', JumpPlayer);
 	socket.on('player death', KillPlayer);
 	socket.on('start', StartGame);
+	socket.on('deadList', UpdateDeadlist);
 
 	// Netcode is really bad atm...
 	// socket.on('player positions', UpdatePositions);
+}
+
+function UpdateDeadlist(newID) {
+	deadList = newID;
 }
 
 function StartGame() {
@@ -135,10 +142,14 @@ function JumpPlayer(newID) {
 function CreatePlayer(newID) {
     newID.forEach(function(singleID) {
         var hasDone = false;
+		var isDead = false;
         allPlayers.forEach(function(oldID) {
            if (singleID[0] == oldID[0]) {
                hasDone = true;
            }
+		   if (deadList.indexOf(singleID[0]) != -1) {
+			   isDead = true;
+		   }
         });
         if (hasDone == false) {
             var newChar = game.add.sprite(singleID[1], 200, "char");
@@ -147,6 +158,10 @@ function CreatePlayer(newID) {
             newChar.body.setRectangle(0,0);
             newChar.body.setCollisionGroup(playerCollisionGroup);
 			newChar.body.fixedRotation = true;
+
+			if (isDead) {
+				newChar.kill();
+			}
         }
     });
 
