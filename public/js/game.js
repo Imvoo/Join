@@ -87,6 +87,18 @@ var SetupIOConnections = function() {
     socket.on('kill player', DeletePlayer);
     socket.on('jump', JumpPlayer);
 	socket.on('player death', KillPlayer);
+	socket.on('player positions', UpdatePositions);
+}
+
+function UpdatePositions(data) {
+	data.forEach(function(row) {
+		allPlayers.forEach(function(player) {
+			if (row[0] == player[0]) {
+				player[1].x = row[1];
+				player[1].y = row[2];
+			}
+		});
+	});
 }
 
 function KillPlayer(id) {
@@ -166,7 +178,7 @@ function update() {
 		socket.emit('player death', id);
 	}
 
-    socket.emit('position', { id: id, x: character.x, y: character.y});
+    socket.emit('position', [id, character.x, character.y]);
 }
 
 function Jump(object) {

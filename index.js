@@ -5,6 +5,7 @@ var io = require('socket.io')(http);
 
 var allSockets = [];
 var players = [];
+var positions = [];
 
 var stdin = process.openStdin();
 stdin.addListener("data", function(d) {
@@ -31,8 +32,20 @@ io.on('connection', function(socket) {
        socket.broadcast.emit('jump', id);
     });
 
-	socket.on('position', function(id, x, y) {
-		console.log(id, x, y);
+	// Data = id, x, y
+	socket.on('position', function(data) {
+		var stored = false;
+
+		positions.forEach(function(item) {
+			if (item[0] == data[0]) {
+				item = data;
+				stored = true;
+			}
+		});
+
+		if (stored == false) {
+			positions.push(data);
+		}
 	});
 
 	socket.on('player death', function(id) {
@@ -53,9 +66,9 @@ io.on('connection', function(socket) {
         io.emit("kill player", playerID);
     });
 
-	// setInterval(function() {
-	// 	socket.emit("player position", )
-	// });
+	setInterval(function() {
+		socket.emit("player positions", positions)
+	}, 250);
 });
 
 http.listen(2345, function() {
