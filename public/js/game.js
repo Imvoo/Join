@@ -156,39 +156,39 @@ function JumpPlayer(newID) {
 }
 
 function CreatePlayer(newID) {
-    // newID.forEach(function(singleID) {
-	// 	singleID = singleID[1];
-    //     var hasDone = false;
-	// 	var isDead = false;
-    //     allPlayers.forEach(function(oldID) {
-	// 	   console.log(singleID, oldID);
-    //        if (singleID[0] == oldID[0]) {
-    //            hasDone = true;
-    //        }
-	// 	   if (deadList.indexOf(singleID[0]) != -1) {
-	// 		   isDead = true;
-	// 	   }
-    //     });
-    //     if (hasDone == false) {
-    //         var newChar = game.add.sprite(singleID[1], 200, "char");
-    //         game.physics.p2.enable(newChar);
-    //         allPlayers.push([singleID[0], newChar, singleID[1]]);
-    //         newChar.body.setRectangle(0,0);
-    //         newChar.body.setCollisionGroup(playerCollisionGroup);
-	// 		newChar.body.fixedRotation = true;
-	// 		newChar.alpha = 0.4;
+    newID.forEach(function(singleID) {
+		singleID = singleID[1];
+        var hasDone = false;
+		var isDead = false;
+        allPlayers.forEach(function(oldID) {
+		   console.log(singleID, oldID);
+           if (singleID[0] == oldID[0]) {
+               hasDone = true;
+           }
+		   if (deadList.indexOf(singleID[0]) != -1) {
+			   isDead = true;
+		   }
+        });
+        if (hasDone == false) {
+            var newChar = game.add.sprite(singleID[1], 200, "char");
+            game.physics.p2.enable(newChar);
+            allPlayers.push([singleID[0], newChar, singleID[1]]);
+            newChar.body.setRectangle(0,0);
+            newChar.body.setCollisionGroup(playerCollisionGroup);
+			newChar.body.fixedRotation = true;
+			newChar.alpha = 0.4;
 
-	// 		console.log("created");
-	// 		// console.log(singleID);
+			console.log("created");
+			// console.log(singleID);
 
-	// 		if (isDead == true) {
-	// 			newChar.kill();
-	// 		}
-    //     }
-    // });
+			if (isDead == true) {
+				newChar.kill();
+			}
+        }
+    });
 
-	// console.log("---------");
-	// console.log(allPlayers);
+	console.log("---------");
+	console.log(allPlayers);
 
     UpdateHeaderText();
 }
