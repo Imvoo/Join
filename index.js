@@ -35,12 +35,13 @@ setInterval(function() {
 }, 5000);
 
 io.on('connection', function(socket) {
-	socket.emit('deadList', deadList);
-	socket.emit('players', players);
 	allSockets.push(socket);
 
+	socket.emit('deadList', deadList);
+	socket.emit('players', players);
+
 	socket.on('new player', function(id) {
-		players.push(id);
+		players.push([socket.id, id]);
 		socket.broadcast.emit('players', players);
 	});
 
@@ -83,12 +84,12 @@ io.on('connection', function(socket) {
 		var tmp = allSockets.pop(result);
 		var playerID = players.pop(result);
 
-		// for (var j = 0; j < players.length; j++) {
-		// 	// console.log(players[j][0], tmp);
-		// 	if (players[j][0] == tmp[1]) {
-		// 		playerID = players.pop(j);
-		// 	}
-		// };
+		for (var j = 0; j < players.length; j++) {
+			// console.log(players[j][0], tmp);
+			if (players[j][0] == socket.id) {
+				playerID = players.pop(j);
+			}
+		};
 		socket.broadcast.emit("delete player", playerID);
 		console.log("dcd: " + playerID);
 	});
