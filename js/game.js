@@ -33,6 +33,7 @@ function create() {
 	
 	keyInput = game.input.keyboard.createCursorKeys();
 	
+	game.input.onDown.add(Jump, character);	
 }
 
 function update() {
