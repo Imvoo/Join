@@ -83,8 +83,6 @@ io.on('connection', function(socket) {
 		socket.broadcast.emit("delete player", result);
 		console.log("dcd: " + result);
 		console.log(players);
-		console.log(socket);
-		console.log(socket.request);
 	});
 
 	// NETCODE TOO HARD FOR ME :'(
