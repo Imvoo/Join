@@ -18,11 +18,12 @@ io.on('connection', function(socket) {
     socket.broadcast.emit('players', players);
     
     socket.on('new player', function(id) {
-       console.log("player id " + id) 
+       console.log("player id " + id);
        players.push(id);
     });
     
     socket.on('disconnect', function() {
+        console.log("disconnect");
         var i = allSockets.indexOf(socket);
         var playerID = players.pop(i);
         io.emit("kill player", playerID);
