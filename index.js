@@ -13,30 +13,25 @@ stdin.addListener("data", function(d) {
 });
 
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/index.html'); 
+    res.sendFile(__dirname + '/index.html');
 });
 
 app.use(express.static('public'));
 
 io.on('connection', function(socket) {
-    console.log("user conn");
-    console.log("users:");
     allSockets.push(socket);
-    console.log(players);
     socket.emit('players', players);
-    
+
     socket.on('new player', function(id) {
-       console.log("player id " + id);
        players.push(id);
        io.emit('players', players);
     });
-    
+
     socket.on('jump', function(id) {
-       socket.broadcast.emit('jump', id); 
+       socket.broadcast.emit('jump', id);
     });
-    
+
     socket.on('disconnect', function() {
-        console.log("disconnect");
         var i = 0;
         var result;
         allSockets.forEach(function(newSocket) {
@@ -45,7 +40,6 @@ io.on('connection', function(socket) {
            }
            i += 1;
         });
-        console.log(result);
         allSockets.pop(i);
         var playerID = players.pop(i);
         io.emit("kill player", playerID);
@@ -53,5 +47,5 @@ io.on('connection', function(socket) {
 });
 
 http.listen(2345, function() {
-   console.log("Listening on :2345."); 
+   console.log("Listening on :2345.");
 });
