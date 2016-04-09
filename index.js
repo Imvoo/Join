@@ -40,7 +40,7 @@ io.on('connection', function(socket) {
 
 
 	socket.on('new player', function(id) {
-		allSockets.push(socket);
+		allSockets.push([socket, id]);
 		players.push(id);
 		io.emit('players', players);
 	});
@@ -73,15 +73,24 @@ io.on('connection', function(socket) {
 	socket.on('disconnect', function() {
 		var i = 0;
 		var result;
+
 		allSockets.forEach(function(newSocket) {
-			if (socket == newSocket) {
+			if (socket == newSocket[0]) {
 				result = i;
 			}
 			i += 1;
 		});
-		allSockets.pop(result);
-		var playerID = players.pop(result);
+
+		var tmp = allSockets.pop(result);
+		var playerID;
+
+		for (var j = 0; j < players.length; j++) {
+			if (players[j][0] == tmp[1]) {
+				playerID = players.pop(j);
+			}
+		};
 		io.emit("delete player", playerID);
+		console.log("dcd: " + playerID);
 	});
 
 	// NETCODE TOO HARD FOR ME :'(

@@ -39,6 +39,8 @@ function preload() {
 function create() {
 	randAmount = 200;
 
+	console.log("me: " + id);
+
     socket = io.connect("http://167.160.162.247:2345");
 
 	game.stage.disableVisibilityChange = true;
