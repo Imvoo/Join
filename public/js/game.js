@@ -82,7 +82,7 @@ function CreatePlayer(newID) {
     newID.forEach(function(singleID) {
         var hasDone = false;
         allPlayers.forEach(function(oldID) {
-           if (singleID == oldID) {
+           if (singleID == oldID[0]) {
                hasDone = true;
            } 
         });
@@ -98,7 +98,7 @@ function CreatePlayer(newID) {
 function DeletePlayer(id) {
     console.log("Detle, " + id);
     allPlayers.forEach(function(player) {
-        console.log("finding, " + player[0]);
+       console.log("finding, " + player[0]);
        if (player[0] == id) {
            player[1].kill();
        } 
