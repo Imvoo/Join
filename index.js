@@ -28,7 +28,7 @@ io.on('connection', function(socket) {
         console.log("disconnect");
         var i = allSockets.indexOf(socket);
         var playerID = players.pop(i);
-        io.emit("kill player", playerID);
+        socket.emit("kill player", playerID);
     });
 });
 

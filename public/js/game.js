@@ -1,4 +1,4 @@
-var socket = io.connect("http://167.160.162.247:2345");
+var socket;
 
 var id = Math.floor(Math.random() * 1000000);
 
@@ -29,16 +29,8 @@ function preload() {
 }
 
 function create() {
+    socket = io.connect("http://167.160.162.247:2345");
     socket.emit('new player', id);
-    
-    socket.on('players', function(data) {
-        var newChar = game.add.sprite(200, 200, "char");
-        game.physics.p2.enable(newChar);
-        // newChar.body.fixedRotation(true);
-        console.log("SAW SOMEONE");
-        console.log("me: ", id);
-        allPlayers.push([data]);        
-    });
     
 	game.stage.disableVisibilityChange = true;
 	game.stage.backgroundColor = "#ffffff";
@@ -76,15 +68,22 @@ function create() {
 	});
 	
 	PositionWalls(walls);
+    
+    SetupIOConnections();
+}
+
+var SetupIOConnections = function() {
+    socket.on('players', CreatePlayer);
+    socket.on('kill player', DeletePlayer);
 }
 
 function CreatePlayer(newID) {
-    // var newChar = game.add.sprite(200, 200, "char");
-    // game.physics.p2.enable(newChar);
-    // // newChar.body.fixedRotation(true);
-    // console.log("SAW SOMEONE");
-    // console.log("me: ", id);
-    // allPlayers.push([newID]);
+    var newChar = game.add.sprite(200, 200, "char");
+    game.physics.p2.enable(newChar);
+    // newChar.body.fixedRotation(true);
+    console.log("SAW SOMEONE");
+    console.log("me: ", id);
+    allPlayers.push([newID]);
 }
 
 function DeletePlayer(id) {
