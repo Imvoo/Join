@@ -176,9 +176,9 @@ function CreatePlayer(newID) {
 			console.log("created");
 			// console.log(singleID);
 
-			// if (isDead == true) {
-			// 	newChar.kill();
-			// }
+			if (isDead == true) {
+				newChar.kill();
+			}
         }
     });
 
