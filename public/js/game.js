@@ -90,7 +90,7 @@ function CreatePlayer(newID) {
             var newChar = game.add.sprite(200, 200, "char");
             game.physics.p2.enable(newChar);
             // newChar.body.fixedRotation(true);
-            allPlayers.push(newID);
+            allPlayers.push([newID, newChar]);
         }
     });
 }
