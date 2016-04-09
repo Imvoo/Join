@@ -1,4 +1,4 @@
-var socket = io();
+var socket = io.connect("http://167.160.162.247:2345");
 
 var id = Math.floor(Math.random() * 1000000);
 
