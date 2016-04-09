@@ -19,6 +19,7 @@ var walls = [];
 var wallsGap = 150;
 var wallSpeed = 5;
 
+var playerCollisionGroup;
 
 var allPlayers = [];
 
@@ -55,8 +56,9 @@ function create() {
 	keyInput = game.input.keyboard.createCursorKeys();
 	
 	// Collision groups!
-	var playerCollisionGroup = game.physics.p2.createCollisionGroup();
+	playerCollisionGroup = game.physics.p2.createCollisionGroup();
 	var wallsCollisionGroup = game.physics.p2.createCollisionGroup();
+    game.physics.p2.updateBoundsCollisionGroup();
 	
 	
 	wall1 = game.add.sprite(700, 50, "wall");
@@ -71,6 +73,7 @@ function create() {
 	PositionWalls(walls);
     
     allPlayers.push([id, character]);
+    character.body.setCollisionGroup(playerCollisionGroup);
     
     SetupIOConnections();
 }
@@ -105,6 +108,7 @@ function CreatePlayer(newID) {
             // newChar.body.fixedRotation(true);
             allPlayers.push([singleID, newChar]);
             newChar.body.setRectangle(0,0);
+            newChar.body.setCollisionGroup(playerCollisionGroup);
         }
     });
 }
