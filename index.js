@@ -21,7 +21,7 @@ var listener = function() {
 };
 
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/index.html');
+	res.sendFile(__dirname + '/index.html');
 });
 
 app.use(express.static('public'));
@@ -35,19 +35,19 @@ setInterval(function() {
 }, 5000);
 
 io.on('connection', function(socket) {
-    allSockets.push(socket);
 	socket.emit('deadList', deadList);
-    socket.emit('players', players);
+	socket.emit('players', players);
 
 
-    socket.on('new player', function(id) {
-       players.push(id);
-       io.emit('players', players);
-    });
+	socket.on('new player', function(id) {
+		allSockets.push(socket);
+		players.push(id);
+		io.emit('players', players);
+	});
 
-    socket.on('jump', function(id) {
-       socket.broadcast.emit('jump', id);
-    });
+	socket.on('jump', function(id) {
+		socket.broadcast.emit('jump', id);
+	});
 
 	// Data = id, x, y
 	socket.on('position', function(data) {
@@ -70,19 +70,19 @@ io.on('connection', function(socket) {
 		socket.broadcast.emit('player death', id);
 	});
 
-    socket.on('disconnect', function() {
-        var i = 0;
-        var result;
-        allSockets.forEach(function(newSocket) {
-           if (socket == newSocket) {
-               result = i;
-           }
-           i += 1;
-        });
-        allSockets.pop(i);
-        var playerID = players.pop(i);
-        io.emit("delete player", playerID);
-    });
+	socket.on('disconnect', function() {
+		var i = 0;
+		var result;
+		allSockets.forEach(function(newSocket) {
+			if (socket == newSocket) {
+				result = i;
+			}
+			i += 1;
+		});
+		allSockets.pop(i);
+		var playerID = players.pop(i);
+		io.emit("delete player", playerID);
+	});
 
 	// NETCODE TOO HARD FOR ME :'(
 	// setInterval(function() {
@@ -91,6 +91,6 @@ io.on('connection', function(socket) {
 });
 
 http.listen(2345, function() {
-   console.log("Listening on :2345.");
-   listener();
+	console.log("Listening on :2345.");
+	listener();
 });
