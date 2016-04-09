@@ -87,7 +87,7 @@ function create() {
     character.body.setCollisionGroup(playerCollisionGroup);
 	character.isJumping = false;
 
-    socket = io.connect("http://167.160.162.247:2345", {'force new connection': true});
+    socket = io.connect("http://167.160.162.247:2345", {'multiplex': false});
 
 	socket.emit('new player', [id, 30+shift]);
 
