@@ -114,20 +114,19 @@ function UpdatePositions(data) {
 	});
 }
 
-function KillPlayer(id) {
-	console.log(id);
+function KillPlayer(newID) {
     for (var i = 0; i < allPlayers.length; i++) {
-        console.log(".. " + allPlayers[i][0] + " .. " + id);
-		if (allPlayers[i][0] == id) {
+		if (allPlayers[i][0] == newID) {
+			console.log("le kill me = " + id + " u is " + allPlayers[i][0]);
             allPlayers[i][1].kill();
             break;
         }
     }
 }
 
-function JumpPlayer(id) {
+function JumpPlayer(newID) {
     for (var i = 0; i < allPlayers.length; i++) {
-        if (allPlayers[i][0] == id) {
+        if (allPlayers[i][0] == newID) {
             Jump(allPlayers[i][1]);
             break;
         }
@@ -192,7 +191,7 @@ function update() {
 	MoveWalls(walls);
 
 	var collided = CheckCollision();
-	if (collided == true) {
+	if (collided == true && character.alive == true) {
 		var style = { font: "20px Arial", fill:"Black" };
 		deathText = game.add.text(0,0,"You have died!",style);
 		character.kill();
