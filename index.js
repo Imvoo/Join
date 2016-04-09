@@ -41,7 +41,7 @@ io.on('connection', function(socket) {
 
 	socket.on('new player', function(id) {
 		players.push(id);
-		io.emit('players', players);
+		socket.broadcast.emit('players', players);
 	});
 
 	socket.on('jump', function(id) {
