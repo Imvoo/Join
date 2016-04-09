@@ -72,11 +72,11 @@ function create() {
 }
 
 function CreatePlayer(id) {
-    var newChar = game.add.sprite(200, 200, "char");
+    // var newChar = game.add.sprite(200, 200, "char");
     // game.physics.p2.enable(newChar);
     // newChar.body.fixedRotation(true);
-    
-    allPlayers.push([id, newChar]);
+    console.log("SAW SOMEONE");
+    allPlayers.push([id]);
 }
 
 function DeletePlayer(id) {
