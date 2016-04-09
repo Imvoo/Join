@@ -81,14 +81,14 @@ io.on('connection', function(socket) {
 		});
 
 		var tmp = allSockets.pop(result);
-		var playerID;
+		var playerID = players.pop(result);
 
-		for (var j = 0; j < players.length; j++) {
-			console.log(players[j][0], tmp);
-			if (players[j][0] == tmp[1]) {
-				playerID = players.pop(j);
-			}
-		};
+		// for (var j = 0; j < players.length; j++) {
+		// 	// console.log(players[j][0], tmp);
+		// 	if (players[j][0] == tmp[1]) {
+		// 		playerID = players.pop(j);
+		// 	}
+		// };
 		io.emit("delete player", playerID);
 		console.log("dcd: " + playerID);
 	});
