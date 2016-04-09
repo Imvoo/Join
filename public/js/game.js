@@ -41,8 +41,6 @@ function create() {
 
 	console.log("me: " + id);
 
-    socket = io.connect("http://167.160.162.247:2345");
-
 	game.stage.disableVisibilityChange = true;
 	game.stage.backgroundColor = "#ffffff";
 	// game.add.image(0, 0, "background");
@@ -88,6 +86,8 @@ function create() {
     allPlayers.push([id, character, shift+30]);
     character.body.setCollisionGroup(playerCollisionGroup);
 	character.isJumping = false;
+
+    socket = io.connect("http://167.160.162.247:2345");
 
 	socket.emit('new player', [id, 30+shift]);
 
@@ -153,6 +153,7 @@ function JumpPlayer(newID) {
 function CreatePlayer(newID) {
     newID.forEach(function(singleID) {
 		singleID = singleID[1];
+		console.log(singleID);
         var hasDone = false;
 		var isDead = false;
         allPlayers.forEach(function(oldID) {
@@ -185,8 +186,6 @@ function CreatePlayer(newID) {
 	console.log("---------");
 	console.log(allPlayers);
 
-	console.log(deadList);
-
     UpdateHeaderText();
 }
 
@@ -196,6 +195,7 @@ function UpdateHeaderText() {
 }
 
 function DeletePlayer(newID) {
+	console.log("delete under")
 	console.log(newID);
     for (var i = 0; i < allPlayers.length; i++) {
 		if (allPlayers[i][0] == newID[1][0]) {
