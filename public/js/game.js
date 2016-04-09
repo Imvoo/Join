@@ -30,6 +30,9 @@ var allPlayers = [];
 
 var startGameNow;
 
+var backLayer;
+var frontLayer;
+
 function preload() {
 	game.load.image("char", "../img/turkey_small.png");
 	game.load.image("background", "../img/background_real2x.png");
@@ -38,6 +41,9 @@ function preload() {
 
 function create() {
 	randAmount = 200;
+
+	backLayer = game.add.group();
+	frontLayer = game.add.group();
 
     socket = io.connect("http://167.160.162.247:2345");
 
@@ -90,6 +96,7 @@ function create() {
 	socket.emit('new player', [id, 30+shift]);
 
 	startGameNow = false;
+	frontLayer.add(character);
 
     SetupIOConnections();
 }
@@ -169,6 +176,9 @@ function CreatePlayer(newID) {
             newChar.body.setRectangle(0,0);
             newChar.body.setCollisionGroup(playerCollisionGroup);
 			newChar.body.fixedRotation = true;
+			newChar.alpha = 0.4;
+
+			backLayer.add(newChar);
 
 			if (isDead) {
 				newChar.kill();
