@@ -31,6 +31,10 @@ io.on('connection', function(socket) {
        io.emit('players', players);
     });
     
+    socket.on('jump', function(id) {
+       socket.broadcast.emit('jump', id); 
+    });
+    
     socket.on('disconnect', function() {
         console.log("disconnect");
         var i = 0;

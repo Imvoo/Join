@@ -77,6 +77,16 @@ function create() {
 var SetupIOConnections = function() {
     socket.on('players', CreatePlayer);
     socket.on('kill player', DeletePlayer);
+    socket.on('jump', JumpPlayer);
+}
+
+function JumpPlayer(id) {
+    for (var i = 0; i < allPlayers.length; i++) {
+        if (allPlayers[i][0] == id) {
+            Jump(allPlayers[i][1]);
+            break;
+        }
+    }    
 }
 
 function CreatePlayer(newID) {
@@ -113,6 +123,7 @@ function DeletePlayer(id) {
 function update() {	
 	if (keyInput.up.isDown || game.input.pointer1.isDown) {
 		Jump(character);
+        socket.emit('jump', id);
 	}
 	
 	MoveWalls(walls);
