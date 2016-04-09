@@ -20,6 +20,8 @@ function create() {
 	game.physics.startSystem(Phaser.Physics.P2JS);
 	game.physics.p2.defaultRestitution = 0;
 	game.physics.p2.gravity.y = 980;
+	
+	game.input.addPointer();
 		
 	var text = "Hello world!";
 	var style = { font: "60px   Arial", fill:"Black" };
@@ -32,14 +34,12 @@ function create() {
 	character.body.fixedRotation = true;
 	
 	keyInput = game.input.keyboard.createCursorKeys();
-	
-	game.input.onDown.add(Jump, character);	
 }
 
 function update() {
 	MoveText();
 	
-	if (keyInput.up.isDown) {
+	if (keyInput.up.isDown || game.input.pointer1.isDown) {
 		Jump(character);
 	}
 }
