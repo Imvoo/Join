@@ -79,10 +79,9 @@ io.on('connection', function(socket) {
 			}
 			i += 1;
 		});
-		allSockets.pop(i);
-		var playerID = players.pop(i);
+		allSockets.pop(result);
+		var playerID = players.pop(result);
 		io.emit("delete player", playerID);
-		console.log("i left: " + playerID);
 	});
 
 	// NETCODE TOO HARD FOR ME :'(

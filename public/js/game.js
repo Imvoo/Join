@@ -37,7 +37,6 @@ function preload() {
 }
 
 function create() {
-	console.log("me: " + id);
 	randAmount = 200;
 
     socket = io.connect("http://167.160.162.247:2345");
@@ -110,7 +109,6 @@ var SetupIOConnections = function() {
 
 function UpdateGap(gapRange) {
 	randAmount = gapRange;
-	console.log("updated gap");
 }
 
 function UpdateDeadlist(newID) {
@@ -118,7 +116,6 @@ function UpdateDeadlist(newID) {
 }
 
 function StartGame(arg) {
-	console.log("startin");
 	startGameNow = true;
 }
 
@@ -188,7 +185,6 @@ function UpdateHeaderText() {
 
 function DeletePlayer(newID) {
     for (var i = 0; i < allPlayers.length; i++) {
-		console.log(newID[0], id, allPlayers[i][0]);
 		if (allPlayers[i][0] == newID[0]) {
             allPlayers[i][1].kill();
             allPlayers.pop(i);
