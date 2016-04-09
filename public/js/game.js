@@ -75,6 +75,7 @@ function create() {
 
     allPlayers.push([id, character, shift+30]);
     character.body.setCollisionGroup(playerCollisionGroup);
+	character.isJumping = false;
 
 	socket.emit('new player', [id, 30+shift]);
 
@@ -135,9 +136,14 @@ function DeletePlayer(id) {
 }
 
 function update() {
-	if (keyInput.up.isDown || game.input.pointer1.isDown) {
+	if ((keyInput.up.isDown || game.input.pointer1.isDown) && isJumping == false) {
 		Jump(character);
+		character.isJumping = true;
         socket.emit('jump', id);
+	}
+
+	if (keyInput.up.isUp || game.input.pointer1.isUp) {
+		character.isJumping = false;
 	}
 
 	MoveWalls(walls);
