@@ -11,9 +11,8 @@ var deadList = [];
 var stdin = process.openStdin();
 var listener = function() {
 	stdin.addListener("data", function(d) {
-		console.log("." + d);
+		d = d.toString().trim()
 		if (d == "start") {
-			console.log("start da game");
 			io.emit("start");
 		}
 		// players.push(d);
