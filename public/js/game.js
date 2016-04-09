@@ -70,7 +70,7 @@ function create() {
 	PositionWalls(walls);
     
     allPlayers.push([id, character]);
-    character.motionState = 2;
+    character.motionState = 4;
     
     SetupIOConnections();
 }
@@ -104,7 +104,7 @@ function CreatePlayer(newID) {
             game.physics.p2.enable(newChar);
             // newChar.body.fixedRotation(true);
             allPlayers.push([singleID, newChar]);
-            newChar.motionState = 2;
+            newChar.motionState = 4;
         }
     });
 }
