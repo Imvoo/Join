@@ -15,7 +15,7 @@ app.use(express.static('public'));
 io.on('connection', function(socket) {
     console.log("user conn");
     allSockets.push(socket);
-    socket.broadcast.emit('players', players);
+    io.emit('players', players);
     
     socket.on('new player', function(id) {
        console.log("player id " + id);
