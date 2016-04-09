@@ -28,14 +28,22 @@ io.on('connection', function(socket) {
     socket.on('new player', function(id) {
        console.log("player id " + id);
        players.push(id);
-       socket.emit('players', players);
+       io.emit('players', players);
     });
     
     socket.on('disconnect', function() {
         console.log("disconnect");
-        var i = allSockets.indexOf(socket);
+        var i = 0;
+        var result;
+        allSockets.forEach(function(newSocket) {
+           if (socket == newSocket) {
+               result = i;
+           }
+           i += 1;
+        });
+        console.log(result);
         var playerID = players.pop(i);
-        socket.emit("kill player", playerID);
+        io.emit("kill player", playerID);
     });
 });
 
