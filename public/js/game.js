@@ -173,11 +173,11 @@ function CreatePlayer(newID) {
 			newChar.alpha = 0.4;
 
 			console.log("created");
-			console.log(singleID);
+			// console.log(singleID);
 
-			if (isDead) {
-				newChar.kill();
-			}
+			// if (isDead == true) {
+			// 	newChar.kill();
+			// }
         }
     });
 
