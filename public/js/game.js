@@ -28,7 +28,7 @@ var start = false;
 
 function preload() {
 	game.load.image("char", "../img/turkey_small.png");
-	game.load.image("background", "../img/background-real2x.png");
+	game.load.image("background", "../img/background_real2x.png");
 	game.load.image("wall", "../img/wall.png");
 }
 
