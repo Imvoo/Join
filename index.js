@@ -38,9 +38,8 @@ io.on('connection', function(socket) {
 	socket.emit('deadList', deadList);
 	socket.emit('players', players);
 
-
 	socket.on('new player', function(id) {
-		allSockets.push([socket, id]);
+		allSockets.push(socket);
 		players.push(id);
 		io.emit('players', players);
 	});
@@ -75,7 +74,7 @@ io.on('connection', function(socket) {
 		var result;
 
 		allSockets.forEach(function(newSocket) {
-			if (socket == newSocket[0]) {
+			if (socket == newSocket) {
 				result = i;
 			}
 			i += 1;
@@ -86,7 +85,7 @@ io.on('connection', function(socket) {
 
 		for (var j = 0; j < players.length; j++) {
 			console.log(players[j][0], tmp);
-			if (players[j][0] == tmp[1][0]) {
+			if (players[j][0] == tmp[1]) {
 				playerID = players.pop(j);
 			}
 		};
