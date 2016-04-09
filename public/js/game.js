@@ -1,3 +1,7 @@
+var socket = io();
+
+var id = Math.floor(Math.random() * 1000000);
+
 var screenWidth = 800;
 var screenHeight = 600;
 
@@ -15,6 +19,8 @@ var walls = [];
 var wallsGap = 150;
 var wallSpeed = 5;
 
+var allPlayers = [];
+
 function preload() {
 	game.load.image("char", "../img/circle.png");
 	game.load.image("background", "../img/background.png");
@@ -22,6 +28,10 @@ function preload() {
 }
 
 function create() {
+    socket.emit('new player', id);
+    
+    socket.on('players', CreatePlayer());
+    
 	game.stage.disableVisibilityChange = true;
 	game.stage.backgroundColor = "#ffffff";
 	game.add.image(0, 0, "background");
@@ -40,7 +50,6 @@ function create() {
 	character = game.add.sprite(200, 200, "char");
 	game.physics.p2.enable(character);
 	character.body.fixedRotation = true;
-	character.body.gravity.y = 960;
 	
 	keyInput = game.input.keyboard.createCursorKeys();
 	
@@ -59,6 +68,23 @@ function create() {
 	});
 	
 	PositionWalls(walls);
+}
+
+function CreatePlayer(id) {
+    var newChar = game.add.sprite(200, 200, "char");
+    game.physics.p2.enable(newChar);
+    newChar.body.fixedRotation(true);
+    
+    allPlayers.push([id, newChar]);
+}
+
+function DeletePlayer(id) {
+    allPlayers.forEach(function(player) {
+       if (player[0] == id) {
+           player[1].kill();
+           break;
+       } 
+    });
 }
 
 function update() {	
