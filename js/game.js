@@ -1,4 +1,7 @@
-var game = new Phaser.Game(800 ,600, Phaser.AUTO, '', { preload: preload, create:create, update:update });
+var screenWidth = 800;
+var screenHeight = 600;
+
+var game = new Phaser.Game(screenWidth, screenHeight, Phaser.AUTO, '', { preload: preload, create:create, update:update });
 
 var t;
 
@@ -7,10 +10,12 @@ function preload() {
 }
 
 function create() {
+    game.stage.disableVisibilityChange = true;
+    
     var text = "Hello world!";
     var style = { font: "60px Arial", fill:"White" };
     
-    t = game.add.text(game.world.centerX, 350, text, style);
+    t = game.add.text(game.world.centerX, screen.height/2, text, style);
     t.moveLeft = true;
 }
 
