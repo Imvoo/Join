@@ -29,7 +29,6 @@ function preload() {
 }
 
 function create() {
-    allPlayers.push(id);
     socket = io.connect("http://167.160.162.247:2345");
     socket.emit('new player', id);
     
@@ -70,6 +69,8 @@ function create() {
 	
 	PositionWalls(walls);
     
+    allPlayers.push([id, character]);
+    
     SetupIOConnections();
 }
 
@@ -98,8 +99,8 @@ function CreatePlayer(newID) {
 
 function DeletePlayer(id) {
     for (var i = 0; i < allPlayers.length; i++) {
-        if (player[i][0] == id) {
-            player[i][1].kill();
+        if (allPlayers[i][0] == id) {
+            allPlayers[i][1].kill();
             allPlayers.pop(i);
             break;
         }
