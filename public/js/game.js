@@ -185,6 +185,8 @@ function CreatePlayer(newID) {
 	console.log("---------");
 	console.log(allPlayers);
 
+	console.log(deadList);
+
     UpdateHeaderText();
 }
 
