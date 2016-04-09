@@ -171,6 +171,9 @@ function CreatePlayer(newID) {
 			newChar.body.fixedRotation = true;
 			newChar.alpha = 0.4;
 
+			console.log("created");
+			console.log(singleID);
+
 			if (isDead) {
 				newChar.kill();
 			}
