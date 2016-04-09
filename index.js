@@ -85,6 +85,7 @@ io.on('connection', function(socket) {
 		var playerID;
 
 		for (var j = 0; j < players.length; j++) {
+			console.log(players[j][0], tmp);
 			if (players[j][0] == tmp[1]) {
 				playerID = players.pop(j);
 			}
