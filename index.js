@@ -35,8 +35,6 @@ setInterval(function() {
 }, 5000);
 
 io.on('connection', function(socket) {
-	allSockets.push(socket);
-
 	socket.emit('deadList', deadList);
 	socket.emit('players', players);
 
@@ -70,28 +68,20 @@ io.on('connection', function(socket) {
 		socket.broadcast.emit('player death', id);
 	});
 
-	socket.on('disconnect', function() {
-		var i = 0;
+	socket.on('disconnect', function(data) {
+		console.log(data);
 		var result = null;
-
-		allSockets.forEach(function(newSocket) {
-			if (socket.id == newSocket.id) {
+		for (var i = 0; i < players.length; i++) {
+			if (socket.id == players[i][0]) {
 				result = i;
 			}
-			i += 1;
-		});
+		}
 
-		var tmp = allSockets.pop(result);
-		var playerID = players.pop(result);
-
-		for (var j = 0; j < players.length; j++) {
-			// console.log(players[j][0], tmp);
-			if (players[j][0] == socket.id) {
-				playerID = players.pop(j);
-			}
-		};
-		socket.broadcast.emit("delete player", playerID);
-		console.log("dcd: " + playerID);
+		if (result != null) {
+			result = players.pop(result);
+		}
+		socket.broadcast.emit("delete player", result);
+		console.log("dcd: " + result);
 	});
 
 	// NETCODE TOO HARD FOR ME :'(
