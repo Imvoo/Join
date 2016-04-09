@@ -88,7 +88,6 @@ function create() {
 	socket.emit('new player', [id, 30+shift]);
 
 	startGameNow = false;
-	console.log("atinit: " + startGameNow);
 
     SetupIOConnections();
 }
@@ -116,9 +115,7 @@ function UpdateDeadlist(newID) {
 }
 
 function StartGame(arg) {
-	console.log("atstartgame: " + startGameNow);
 	startGameNow = true;
-	console.log("afterstartgame: " + startGameNow);
 }
 
 function UpdatePositions(data) {
@@ -199,11 +196,6 @@ function DeletePlayer(id) {
 function update() {
 	background.tilePosition.x -= 2;
 
-	console.log("atupdate: " + startGameNow);
-	if (startGameNow == true) {
-		MoveWalls(walls);
-	}
-
 	if ((keyInput.up.isDown || game.input.pointer1.isDown) && character.isJumping == false) {
 		Jump(character);
 		character.isJumping = true;
@@ -214,7 +206,9 @@ function update() {
 		character.isJumping = false;
 	}
 
-	MoveWalls(walls);
+	if (startGameNow == true) {
+		MoveWalls(walls);
+	}
 
 	var collided = CheckCollision();
 	if (collided == true && character.alive == true) {
