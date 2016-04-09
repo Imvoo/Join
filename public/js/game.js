@@ -50,7 +50,8 @@ function create() {
 	character = game.add.sprite(200, 200, "char");
 	game.physics.p2.enable(character);
 	character.body.fixedRotation = true;
-	
+	character.body.setRectangle(0,0);
+    
 	keyInput = game.input.keyboard.createCursorKeys();
 	
 	// Collision groups!
@@ -70,7 +71,6 @@ function create() {
 	PositionWalls(walls);
     
     allPlayers.push([id, character]);
-    character.motionState = 4;
     
     SetupIOConnections();
 }
@@ -104,7 +104,7 @@ function CreatePlayer(newID) {
             game.physics.p2.enable(newChar);
             // newChar.body.fixedRotation(true);
             allPlayers.push([singleID, newChar]);
-            newChar.motionState = 4;
+            newChar.body.setRectangle(0,0);
         }
     });
 }
