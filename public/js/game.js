@@ -29,6 +29,7 @@ function preload() {
 }
 
 function create() {
+    allPlayers.push(id);
     socket = io.connect("http://167.160.162.247:2345");
     socket.emit('new player', id);
     

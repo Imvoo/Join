@@ -28,6 +28,7 @@ io.on('connection', function(socket) {
     socket.on('new player', function(id) {
        console.log("player id " + id);
        players.push(id);
+       socket.emit('players', players);
     });
     
     socket.on('disconnect', function() {
