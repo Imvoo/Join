@@ -26,11 +26,11 @@ app.get('/', function(req, res) {
 
 app.use(express.static('public'));
 
-var value = Math.floor((800 - 200) * Math.random());
+var value = Math.floor((600 - 200) * Math.random());
 io.emit('gap update', value);
 
 setInterval(function() {
-	var value = Math.floor((800 - 200) * Math.random());
+	var value = Math.floor((600 - 200) * Math.random());
 	io.emit('gap update', value);
 }, 5000);
 

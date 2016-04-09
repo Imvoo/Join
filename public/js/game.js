@@ -72,8 +72,8 @@ function create() {
     game.physics.p2.updateBoundsCollisionGroup();
 
 
-	wall1 = game.add.sprite(700, 50, "wall");
-	wall2 = game.add.sprite(700, 50, "wall");
+	wall1 = game.add.sprite(900, 50, "wall");
+	wall2 = game.add.sprite(900, 50, "wall");
 
 	walls.push(wall1, wall2);
 
