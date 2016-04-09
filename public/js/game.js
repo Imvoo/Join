@@ -88,6 +88,7 @@ function create() {
 	socket.emit('new player', [id, 30+shift]);
 
 	startGameNow = false;
+	console.log("atinit: " + startGameNow);
 
     SetupIOConnections();
 }
@@ -115,7 +116,9 @@ function UpdateDeadlist(newID) {
 }
 
 function StartGame(arg) {
+	console.log("atstartgame: " + startGameNow);
 	startGameNow = true;
+	console.log("afterstartgame: " + startGameNow);
 }
 
 function UpdatePositions(data) {
@@ -196,6 +199,7 @@ function DeletePlayer(id) {
 function update() {
 	background.tilePosition.x -= 2;
 
+	console.log("atupdate: " + startGameNow);
 	if (startGameNow == true) {
 		MoveWalls(walls);
 	}
