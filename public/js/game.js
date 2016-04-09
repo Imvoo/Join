@@ -94,8 +94,8 @@ function UpdatePositions(data) {
 	data.forEach(function(row) {
 		allPlayers.forEach(function(player) {
 			if (row[0] == player[0]) {
-				player[1].x = row[1];
-				player[1].y = row[2];
+				player[1].body.x = row[1];
+				player[1].body.y = row[2];
 			}
 		});
 	});
