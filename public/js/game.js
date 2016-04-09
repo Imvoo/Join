@@ -12,7 +12,7 @@ var textJoin;
 var character;
 var keyInput;
 
-var style = { font: "20px Arial", fill:"Black" };
+var style = { font: "20px Arial", fill:"White" };
 
 var deathText;
 
@@ -28,7 +28,7 @@ var playerCollisionGroup;
 
 var allPlayers = [];
 
-var start;
+var startGameNow = false;
 
 function preload() {
 	game.load.image("char", "../img/turkey_small.png");
@@ -87,7 +87,7 @@ function create() {
 
 	socket.emit('new player', [id, 30+shift]);
 
-	start = false;
+	startGameNow = false;
 
     SetupIOConnections();
 }
@@ -114,8 +114,8 @@ function UpdateDeadlist(newID) {
 	deadList = newID;
 }
 
-function StartGame() {
-	start = true;
+function StartGame(arg) {
+	startGameNow = true;
 }
 
 function UpdatePositions(data) {
@@ -196,7 +196,7 @@ function DeletePlayer(id) {
 function update() {
 	background.tilePosition.x -= 2;
 
-	if (start == true) {
+	if (startGameNow == true) {
 		MoveWalls(walls);
 	}
 
@@ -214,7 +214,7 @@ function update() {
 
 	var collided = CheckCollision();
 	if (collided == true && character.alive == true) {
-		var style = { font: "20px Arial", fill:"Black" };
+		var style = { font: "20px Arial", fill:"White" };
 		deathText = game.add.text(0,0,"You have died!",style);
 		character.kill();
 		socket.emit('player death', id);
