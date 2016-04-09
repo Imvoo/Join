@@ -86,6 +86,16 @@ var SetupIOConnections = function() {
     socket.on('players', CreatePlayer);
     socket.on('kill player', DeletePlayer);
     socket.on('jump', JumpPlayer);
+	socket.on('player death', KillPlayer);
+}
+
+function KillPlayer(id) {
+    for (var i = 0; i < allPlayers.length; i++) {
+        if (allPlayers[i][0] == id) {
+            allPlayers[i][1].kill();
+            break;
+        }
+    }
 }
 
 function JumpPlayer(id) {
@@ -153,6 +163,7 @@ function update() {
 		var style = { font: "20px Arial", fill:"Black" };
 		deathText = game.add.text(0,0,"You have died!",style);
 		character.kill();
+		socket.emit('player death', id);
 	}
 
     socket.emit('position', { id: id, x: character.x, y: character.y});

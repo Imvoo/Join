@@ -31,6 +31,14 @@ io.on('connection', function(socket) {
        socket.broadcast.emit('jump', id);
     });
 
+	socket.on('position', function(id, x, y) {
+		console.log(id, x, y);
+	});
+
+	socket.on('player death', function(id) {
+		socket.emit("player death", id);
+	});
+
     socket.on('disconnect', function() {
         var i = 0;
         var result;
@@ -44,6 +52,10 @@ io.on('connection', function(socket) {
         var playerID = players.pop(i);
         io.emit("kill player", playerID);
     });
+
+	// setInterval(function() {
+	// 	socket.emit("player position", )
+	// });
 });
 
 http.listen(2345, function() {
