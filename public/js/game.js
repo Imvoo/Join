@@ -98,6 +98,8 @@ function CreatePlayer(newID) {
 }
 
 function DeletePlayer(id) {
+    console.log(id);
+    console.log(allPlayers);
     for (var i = 0; i < allPlayers.length; i++) {
         console.log(allPlayers[i][0], id);
         if (allPlayers[i][0] == id) {
