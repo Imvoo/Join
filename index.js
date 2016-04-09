@@ -10,7 +10,6 @@ var deadList = [];
 
 var stdin = process.openStdin();
 stdin.addListener("data", function(d) {
-	console.log("message: " + d);
 	if (d == "start") {
 		io.emit("start", null);
 	}
@@ -24,10 +23,19 @@ app.get('/', function(req, res) {
 
 app.use(express.static('public'));
 
+var value = Math.floor((800 - 200) * Math.random());
+io.emit('gap update', value);
+
+setInterval(function() {
+	var value = Math.floor((800 - 200) * Math.random());
+	io.emit('gap update', value);
+}, 5000);
+
 io.on('connection', function(socket) {
     allSockets.push(socket);
 	socket.emit('deadList', deadList);
     socket.emit('players', players);
+
 
     socket.on('new player', function(id) {
        players.push(id);
@@ -74,9 +82,9 @@ io.on('connection', function(socket) {
     });
 
 	// NETCODE TOO HARD FOR ME :'(
-	setInterval(function() {
-		io.emit("player positions", positions)
-	}, 250);
+	// setInterval(function() {
+	// 	io.emit("player positions", positions)
+	// }, 250);
 });
 
 http.listen(2345, function() {

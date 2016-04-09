@@ -20,6 +20,8 @@ var walls = [];
 var wallsGap = 150;
 var wallSpeed = 5;
 
+var randAmount;
+
 var deadList = [];
 
 var playerCollisionGroup;
@@ -35,8 +37,6 @@ function preload() {
 }
 
 function create() {
-	start = false;
-
     socket = io.connect("http://167.160.162.247:2345");
 
 	game.stage.disableVisibilityChange = true;
@@ -87,6 +87,8 @@ function create() {
 
 	socket.emit('new player', [id, 30+shift]);
 
+	start = false;
+
     SetupIOConnections();
 }
 
@@ -97,9 +99,15 @@ var SetupIOConnections = function() {
 	socket.on('player death', KillPlayer);
 	socket.on('start', StartGame);
 	socket.on('deadList', UpdateDeadlist);
+	socket.on('gap update', UpdateGap);
 
 	// Netcode is really bad atm...
-	socket.on('player positions', UpdatePositions);
+	// socket.on('player positions', UpdatePositions);
+}
+
+function UpdateGap(gapRange) {
+	randAmount = gapRange;
+	console.log("updated gap");
 }
 
 function UpdateDeadlist(newID) {
@@ -212,7 +220,7 @@ function update() {
 		socket.emit('player death', id);
 	}
 
-    socket.emit('position', [id, character.x, character.y]);
+    // socket.emit('position', [id, character.x, character.y]);
 }
 
 function Jump(object) {
@@ -230,7 +238,7 @@ function MoveWalls(walls) {
 }
 
 function PositionWalls(walls) {
-	var randAmount = Math.floor((screenHeight - 200) * Math.random());
+	// var randAmount = Math.floor((screenHeight - 200) * Math.random());
 	walls[0].y = 50 + randAmount - walls[0].height;
 	walls[1].y = randAmount + wallsGap;
 
