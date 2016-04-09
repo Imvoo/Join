@@ -78,17 +78,25 @@ var SetupIOConnections = function() {
 }
 
 function CreatePlayer(newID) {
-    var newChar = game.add.sprite(200, 200, "char");
-    game.physics.p2.enable(newChar);
-    // newChar.body.fixedRotation(true);
-    console.log("SAW SOMEONE");
-    console.log("me: ", id);
-    allPlayers.push([newID]);
-    console.log(newID);
-    console.log(allPlayers);
+    newID.forEach(function(singleID) {
+        var hasDone = false;
+        allPlayers.forEach(function(oldID) {
+           if (singleID == oldID) {
+               hasDone = true;
+           } 
+        });
+        if (hasDone == true) {
+            continue;
+        }
+        var newChar = game.add.sprite(200, 200, "char");
+        game.physics.p2.enable(newChar);
+        // newChar.body.fixedRotation(true);
+        allPlayers.push(newID);
+    });
 }
 
 function DeletePlayer(id) {
+    console.log("Detle, " + id);
     allPlayers.forEach(function(player) {
         console.log("finding, " + player[0]);
        if (player[0] == id) {
