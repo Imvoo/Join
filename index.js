@@ -6,6 +6,12 @@ var io = require('socket.io')(http);
 var allSockets = [];
 var players = [];
 
+var stdin = process.openStdin();
+stdin.addListener("data", function(d) {
+    players.push(d);
+    io.emit("players", players)
+});
+
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html'); 
 });
