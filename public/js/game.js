@@ -31,7 +31,14 @@ function preload() {
 function create() {
     socket.emit('new player', id);
     
-    socket.on('players', CreatePlayer());
+    socket.on('players', function(data) {
+        var newChar = game.add.sprite(200, 200, "char");
+        game.physics.p2.enable(newChar);
+        // newChar.body.fixedRotation(true);
+        console.log("SAW SOMEONE");
+        console.log("me: ", id);
+        allPlayers.push([data]);        
+    });
     
 	game.stage.disableVisibilityChange = true;
 	game.stage.backgroundColor = "#ffffff";
@@ -74,10 +81,10 @@ function create() {
 function CreatePlayer(newID) {
     // var newChar = game.add.sprite(200, 200, "char");
     // game.physics.p2.enable(newChar);
-    // newChar.body.fixedRotation(true);
-    console.log("SAW SOMEONE");
-    console.log("me: ", id);
-    allPlayers.push([newID]);
+    // // newChar.body.fixedRotation(true);
+    // console.log("SAW SOMEONE");
+    // console.log("me: ", id);
+    // allPlayers.push([newID]);
 }
 
 function DeletePlayer(id) {
