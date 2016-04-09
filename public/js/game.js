@@ -37,6 +37,7 @@ function preload() {
 }
 
 function create() {
+	console.log("me: " + id);
 	randAmount = 200;
 
     socket = io.connect("http://167.160.162.247:2345");

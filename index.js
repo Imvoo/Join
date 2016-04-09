@@ -82,6 +82,7 @@ io.on('connection', function(socket) {
 		allSockets.pop(i);
 		var playerID = players.pop(i);
 		io.emit("delete player", playerID);
+		console.log("i left: " + playerID);
 	});
 
 	// NETCODE TOO HARD FOR ME :'(
