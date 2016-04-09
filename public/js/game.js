@@ -85,13 +85,12 @@ function CreatePlayer(newID) {
                hasDone = true;
            } 
         });
-        if (hasDone == true) {
-            continue;
+        if (hasDone == false) {
+            var newChar = game.add.sprite(200, 200, "char");
+            game.physics.p2.enable(newChar);
+            // newChar.body.fixedRotation(true);
+            allPlayers.push(newID);
         }
-        var newChar = game.add.sprite(200, 200, "char");
-        game.physics.p2.enable(newChar);
-        // newChar.body.fixedRotation(true);
-        allPlayers.push(newID);
     });
 }
 
