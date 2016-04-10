@@ -22,7 +22,7 @@ var userName;
 
 var walls = [];
 var wallsGap = 150;
-var wallSpeed = 50;
+var wallSpeed = 100;
 
 var randAmount;
 
@@ -112,9 +112,14 @@ var SetupIOConnections = function() {
 	socket.on('gap update', UpdateGap);
 	socket.on('identify', Identify);
     socket.on('reset', ResetGame);
+    socket.on('position walls', PositionMe);
 
 	// Netcode is really bad atm...
 	// socket.on('player positions', UpdatePositions);
+}
+
+function PositionMe() {
+    PositionWalls(walls);
 }
 
 function ResetGame() {
@@ -286,7 +291,7 @@ function MoveWalls(walls) {
 	});
 
 	if (walls[0].x + walls[0].width < 0) {
-		PositionWalls(walls);
+		socket.emit('wall finished');
 	}
 }
 

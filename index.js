@@ -9,6 +9,8 @@ var players = [];
 var positions = [];
 var deadList = [];
 
+var count = 0;
+
 var adjectives = [];
 var fruits = [];
 
@@ -51,6 +53,15 @@ function determineUsername() {
 
 io.on('connection', function(socket) {
     console.log("Connection: " + socket.id);
+
+    socket.on('wall finished', function() {
+        count = count + 1;
+        
+        if (count >= players.length) {
+            io.emit('position walls');
+            count = 0;
+        }
+    });
 
     socket.on('identify me', function() {
         var random1 = Math.floor(Math.random() * adjectives.length);
