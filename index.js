@@ -9,7 +9,7 @@ var players = [];
 var positions = [];
 var deadList = [];
 
-var count = 0 
+var count = 0
 var oldCount = 0;
 
 var adjectives = [];
@@ -48,9 +48,9 @@ setInterval(function() {
 function determineUsername() {
     var random1 = Math.floor(Math.random() * adjectives.length - 1);
     var random2 = Math.floor(Math.random() * fruits.length - 1);
-    var userName = adjectives[random1] + fruits[random2];  
-    
-    return userName;    
+    var userName = adjectives[random1] + fruits[random2];
+
+    return userName;
 }
 
 io.on('connection', function(socket) {
@@ -58,7 +58,7 @@ io.on('connection', function(socket) {
 
     socket.on('wall finished', function() {
         count = count + 1;
-        
+
         if (count >= oldCount || count >= players.length) {
             io.emit('position walls');
             count = 0;
@@ -70,7 +70,7 @@ io.on('connection', function(socket) {
         var random1 = Math.floor(Math.random() * adjectives.length);
         var random2 = Math.floor(Math.random() * fruits.length);
         var userName = adjectives[random1] + fruits[random2];
-       	socket.emit('identify', [socket.id, userName]); 
+       	socket.emit('identify', [socket.id, userName]);
         socket.emit('deadList', deadList);
 	    socket.emit('players', players);
     });
@@ -108,7 +108,7 @@ io.on('connection', function(socket) {
 
 	socket.on('disconnect', function() {
         console.log("Disconnection: " + socket.id)
-        
+
 		var result = null;
 		for (var i = 0; i < players.length; i++) {
 			if (socket.id == players[i][0]) {
@@ -130,7 +130,7 @@ io.on('connection', function(socket) {
 http.listen(2345, function() {
 	console.log("Listening on :2345.");
 	listener();
-    
+
     fs.readFile('./adjectives.txt', 'utf8', function(err, data) {
         if (err != null) {
             console.log(err);
@@ -144,15 +144,15 @@ http.listen(2345, function() {
     fs.readFile('./fruits.txt', 'utf8', function(err, data) {
         if (err != null) {
             console.log(err);
-        }        
+        }
         var array = data.toString().split("\n");
         array.forEach(function(line) {
             fruits.push(line);
         });
-    });    
-    
+    });
+
     // NETCODE TOO HARD FOR ME :'(
 	setInterval(function() {
 		io.emit("player positions", positions)
-	}, 1000/60);
+	}, 1000/5);
 });

@@ -47,14 +47,14 @@ function preload() {
 function create() {
     emitted = false;
     nameStyle = {font: "12px Arial", fill:"White"};
-    
+
     socket = io.connect("http://167.160.162.247:2345", {'multiplex': false});
     socket.emit('identify me');
 
 	startGameNow = false;
 
     SetupIOConnections();
-    
+
 	randAmount = 200;
 
 	game.stage.disableVisibilityChange = true;
@@ -80,7 +80,7 @@ function create() {
 	character.body.fixedRotation = true;
 	character.body.setRectangle(0,0);
     character.userName = game.add.text(character.x + character.width / 2, character.y - 20, "", nameStyle);
-    
+
 	keyInput = game.input.keyboard.createCursorKeys();
 
 	// Collision groups!
@@ -103,10 +103,10 @@ function create() {
     allPlayers.push([id, character, shift+30]);
     character.body.setCollisionGroup(playerCollisionGroup);
 	character.isJumping = false;
-    
+
     setInterval(function() {
         socket.emit('position', [id, character.x, character.y]);
-    }, 1000/60);
+    }, 1000/5);
 }
 
 var SetupIOConnections = function() {
@@ -143,7 +143,7 @@ function Identify(inUrlID) {
     console.log(inUrlID);
     urlID = inUrlID[0];
     userName = inUrlID[1];
-    
+
     character.userName.text = userName;
     socket.emit('new player', [id, 30+shift, userName]);
 }
@@ -212,7 +212,7 @@ function CreatePlayer(newID) {
 			newChar.alpha = 0.4;
 
             newChar.userName = game.add.text(0, 0, singleID[2], nameStyle);
-            
+
             allPlayers.push([singleID[0], newChar, singleID[1]]);
 
 			if (isDead == true) {
@@ -271,7 +271,7 @@ function update() {
 		character.kill();
 		socket.emit('player death', id);
 	}
-    
+
     UpdateUsernames();
 }
 
@@ -283,7 +283,7 @@ function UpdateUsernames() {
        }
        else {
            player[1].userName.x = -900;
-       } 
+       }
     });
 }
 
