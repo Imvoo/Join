@@ -22,7 +22,7 @@ var userName;
 
 var walls = [];
 var wallsGap = 150;
-var wallSpeed = 5;
+var wallSpeed = 50;
 
 var randAmount;
 
