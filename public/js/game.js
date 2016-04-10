@@ -76,6 +76,7 @@ function create() {
 	game.physics.p2.enable(character);
 	character.body.fixedRotation = true;
 	character.body.setRectangle(0,0);
+    character.userName = game.add.text(character.x + character.width / 2, character.y - 20, "", nameStyle);
     
 	keyInput = game.input.keyboard.createCursorKeys();
 
@@ -130,7 +131,7 @@ function Identify(inUrlID) {
     urlID = inUrlID[0];
     userName = inUrlID[1];
     
-    character.userName = game.add.text(character.x + character.width / 2, character.y - 20, userName, nameStyle);
+    character.userName.text = userName;
     socket.emit('new player', [id, 30+shift, userName]);
 }
 
