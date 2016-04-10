@@ -192,13 +192,14 @@ function CreatePlayer(newID) {
         if (hasDone == false) {
             var newChar = game.add.sprite(singleID[1], 200, "char");
             game.physics.p2.enable(newChar);
-            allPlayers.push([singleID[0], newChar, singleID[1]]);
             newChar.body.setRectangle(0,0);
             newChar.body.setCollisionGroup(playerCollisionGroup);
 			newChar.body.fixedRotation = true;
 			newChar.alpha = 0.4;
 
             newChar.userName = game.add.text(0, 0, singleID[2], nameStyle);
+            
+            allPlayers.push([singleID[0], newChar, singleID[1]]);
 
 			if (isDead == true) {
 				newChar.kill();
