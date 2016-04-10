@@ -52,7 +52,7 @@ function determineUsername() {
 io.on('connection', function(socket) {
     var userName = determineUsername();
     
-    console.log("Connection: " + socket.id + " " + random1 + " " + random2 + " " + userName);
+    console.log("Connection: " + socket.id + " " + userName);
 	socket.emit('identify', [socket.id, userName]);
 	socket.emit('deadList', deadList);
 	socket.emit('players', players);
