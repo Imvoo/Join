@@ -22,7 +22,7 @@ var userName;
 
 var walls = [];
 var wallsGap = 150;
-var wallSpeed = 50;
+var wallSpeed = 5;
 
 var randAmount;
 
@@ -282,7 +282,7 @@ function Jump(object) {
 
 function MoveWalls(walls) {
 	walls.forEach(function (item) {
-		item.x -= wallSpeed * (game.time.elapsed / 1000);
+		item.x -= wallSpeed * game.time.physicsElapsed;
 	});
 
 	if (walls[0].x + walls[0].width < 0) {
