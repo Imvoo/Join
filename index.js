@@ -79,6 +79,7 @@ io.on('connection', function(socket) {
 
 	socket.on('disconnect', function() {
         console.log("Disconnection: " + socket.id)
+        
 		var result = null;
 		for (var i = 0; i < players.length; i++) {
 			if (socket.id == players[i][0]) {
@@ -87,7 +88,9 @@ io.on('connection', function(socket) {
 		}
 
 		if (result != null) {
-			result = players.pop(result);
+            var index = result;
+			result = players[result];
+            players.splice(index, 1);
 		}
 		socket.broadcast.emit("delete player", result);
 		console.log("dcd: " + result);
