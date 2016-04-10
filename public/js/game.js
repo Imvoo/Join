@@ -43,7 +43,7 @@ function preload() {
 }
 
 function create() {
-    nameStyle = {font: "10px Arial", fill:"White"};
+    nameStyle = {font: "12px Arial", fill:"White"};
     
     socket = io.connect("http://167.160.162.247:2345", {'multiplex': false});
     socket.emit('identify me');
@@ -263,7 +263,7 @@ function update() {
 
 function UpdateUsernames() {
     allPlayers.forEach(function(player) {
-       player[1].userName.x = player[1].x + (player[1].width / 2) - player[1].userName.width;
+       player[1].userName.x = player[1].x + (player[1].width / 2);
        player[1].userName.y = player[1].y - 15; 
     });
 }
