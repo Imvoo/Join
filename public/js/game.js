@@ -8,6 +8,8 @@ var screenHeight = 600;
 var game = new Phaser.Game(screenWidth, screenHeight, Phaser.CANVAS, '', { preload: preload, create:create, update:update });
 var background;
 
+var shift;
+
 var textJoin;
 var character;
 var keyInput;
@@ -67,15 +69,13 @@ function create() {
 	textJoin = game.add.text(game.world.width - 10, 10, text, style);
 	textJoin.x -= textJoin.width;
 
-	var shift = Math.floor(Math.random() * 170);
+	shift = Math.floor(Math.random() * 170);
 
 	character = game.add.sprite(30 + shift, 200, "char");
 	game.physics.p2.enable(character);
 	character.body.fixedRotation = true;
 	character.body.setRectangle(0,0);
     
-    character.userName = game.add.text(character.x + character.width / 2, character.y - 20, userName, nameStyle);
-
 	keyInput = game.input.keyboard.createCursorKeys();
 
 	// Collision groups!
@@ -98,8 +98,6 @@ function create() {
     allPlayers.push([id, character, shift+30]);
     character.body.setCollisionGroup(playerCollisionGroup);
 	character.isJumping = false;
-    
-    socket.emit('new player', [id, 30+shift, userName]);
 }
 
 var SetupIOConnections = function() {
@@ -126,8 +124,12 @@ function ResetGame() {
 }
 
 function Identify(inUrlID) {
+    var nameStyle = {font: "10px Arial", fill:"White"};
     urlID = inUrlID[0];
     userName = inUrlID[1];
+    
+    character.userName = game.add.text(character.x + character.width / 2, character.y - 20, userName, nameStyle);
+    socket.emit('new player', [id, 30+shift, userName]);
 }
 
 function UpdateGap(gapRange) {
