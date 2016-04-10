@@ -130,7 +130,7 @@ function Identify(inUrlID) {
     urlID = inUrlID[0];
     userName = inUrlID[1];
     
-    character.userName = game.add.text(character.x + character.width / 2, character.y - 20, "U:" + userName, nameStyle);
+    character.userName = game.add.text(character.x + character.width / 2, character.y - 20, userName, nameStyle);
     socket.emit('new player', [id, 30+shift, userName]);
 }
 
@@ -262,7 +262,10 @@ function update() {
 }
 
 function UpdateUsernames() {
-    
+    allPlayers.forEach(function(player) {
+       singleID[1].userName.x = singleID[1].x + (singleID[1].width / 2) - singleID[1].userName.width;
+       singleID[1].userName.y = singleID[1].y - 15; 
+    });
 }
 
 function Jump(object) {

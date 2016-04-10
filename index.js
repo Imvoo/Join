@@ -52,17 +52,13 @@ function determineUsername() {
 io.on('connection', function(socket) {
     console.log("Connection: " + socket.id);
 
-	socket.emit('deadList', deadList);
-	socket.emit('players', players);
-
     socket.on('identify me', function() {
-        console.log(adjectives.length + " " + fruits.length);
         var random1 = Math.floor(Math.random() * adjectives.length);
         var random2 = Math.floor(Math.random() * fruits.length);
-        console.log(random1);
-        console.log(random2);
         var userName = adjectives[random1] + fruits[random2];
        	socket.emit('identify', [socket.id, userName]); 
+        socket.emit('deadList', deadList);
+	    socket.emit('players', players);
     });
 
 	socket.on('new player', function(id) {
