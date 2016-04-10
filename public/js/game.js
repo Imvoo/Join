@@ -5,7 +5,7 @@ var id = Math.floor(Math.random() * 1000000);
 var screenWidth = 800;
 var screenHeight = 600;
 
-var game = new Phaser.Game(screenWidth, screenHeight, Phaser.CANVAS, '', { preload: preload, create:create, update:update });
+var game = new Phaser.Game(screenWidth, screenHeight, Phaser.AUTO, '', { preload: preload, create:create, update:update });
 var background;
 
 var shift;
