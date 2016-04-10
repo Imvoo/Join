@@ -1,4 +1,3 @@
-Acai 
 Aceola
 Apple
 Apricots
@@ -6,7 +5,6 @@ Avocado
 Banana
 Blackberry
 Blueberries
-Camu Camu berry
 Cherries
 Coconut
 Cranberry
@@ -15,7 +13,6 @@ Currents
 Dates
 Durian
 Fig
-Goji berries
 Gooseberry
 Grapefruit
 Grapes
@@ -25,7 +22,6 @@ Kumquat
 Lemon
 Lime
 Lucuma
-Lychee 
 Mango
 Mangosteen
 Melon
@@ -33,16 +29,12 @@ Mulberry
 Nectarine
 Orange
 Papaya
-Passion Fruit
 Peach
 Pear
 Pineapple
 Plum
 Pomegranate
-Pomelo 
-Prickly Pear
 Prunes
 Raspberries
 Strawberries
-Tangerine/Clementine
 Watermelon

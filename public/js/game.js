@@ -276,7 +276,7 @@ function update() {
 function UpdateUsernames() {
     allPlayers.forEach(function(player) {
        if (player[1].alive) {
-        player[1].userName.x = player[1].x + (player[1].width / 2) - player[1].userName.width;
+        player[1].userName.x = player[1].x + (player[1].width / 2) - (player[1].userName.width / 2);
         player[1].userName.y = player[1].y - 30;
        }
        else {
