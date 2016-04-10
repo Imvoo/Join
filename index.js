@@ -151,5 +151,5 @@ http.listen(2345, function() {
     // NETCODE TOO HARD FOR ME :'(
 	setInterval(function() {
 		io.emit("player positions", positions)
-	}, 1000);
+	}, 1000/60);
 });
