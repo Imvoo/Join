@@ -271,7 +271,7 @@ function UpdateUsernames() {
         player[1].userName.y = player[1].y - 30;
        }
        else {
-           player[1].username.x = -900;
+           player[1].userName.x = -900;
        } 
     });
 }
