@@ -103,6 +103,10 @@ function create() {
     allPlayers.push([id, character, shift+30]);
     character.body.setCollisionGroup(playerCollisionGroup);
 	character.isJumping = false;
+    
+    setInterval(function() {
+        socket.emit('position', [id, character.x, character.y]);
+    },250);
 }
 
 var SetupIOConnections = function() {
@@ -118,7 +122,7 @@ var SetupIOConnections = function() {
     socket.on('position walls', PositionMe);
 
 	// Netcode is really bad atm...
-	// socket.on('player positions', UpdatePositions);
+	socket.on('player positions', UpdatePositions);
 }
 
 function PositionMe() {
@@ -269,14 +273,12 @@ function update() {
 	}
     
     UpdateUsernames();
-
-    // socket.emit('position', [id, character.x, character.y]);
 }
 
 function UpdateUsernames() {
     allPlayers.forEach(function(player) {
        if (player[1].alive) {
-        player[1].userName.x = player[1].x + (player[1].width / 2) - (player[1].userName.width / 2);
+        player[1].userName.x = player[1].x + (player[1].width / 2) - (player[1].userName.width / 2) - 15;
         player[1].userName.y = player[1].y - 30;
        }
        else {

@@ -82,20 +82,20 @@ io.on('connection', function(socket) {
 	});
 
 	// Data = id, x, y
-	// socket.on('position', function(data) {
-	// 	var stored = false;
+	socket.on('position', function(data) {
+		var stored = false;
 
-	// 	positions.forEach(function(item) {
-	// 		if (item[0] == data[0]) {
-	// 			item = data;
-	// 			stored = true;
-	// 		}
-	// 	});
+		positions.forEach(function(item) {
+			if (item[0] == data[0]) {
+				item = data;
+				stored = true;
+			}
+		});
 
-	// 	if (stored == false) {
-	// 		positions.push(data);
-	// 	}
-	// });
+		if (stored == false) {
+			positions.push(data);
+		}
+	});
 
 	socket.on('player death', function(id) {
 		deadList.push(id);
@@ -121,11 +121,6 @@ io.on('connection', function(socket) {
 		console.log("dcd: " + result);
 		console.log(players);
 	});
-
-	// NETCODE TOO HARD FOR ME :'(
-	// setInterval(function() {
-	// 	io.emit("player positions", positions)
-	// }, 250);
 });
 
 http.listen(2345, function() {
@@ -151,4 +146,9 @@ http.listen(2345, function() {
             fruits.push(line);
         });
     });    
+    
+    // NETCODE TOO HARD FOR ME :'(
+	setInterval(function() {
+		io.emit("player positions", positions)
+	}, 1000);
 });
