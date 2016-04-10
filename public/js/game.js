@@ -282,7 +282,7 @@ function Jump(object) {
 
 function MoveWalls(walls) {
 	walls.forEach(function (item) {
-		item.x -= wallSpeed;
+		item.x -= wallSpeed * game.time.elapsed;
 	});
 
 	if (walls[0].x + walls[0].width < 0) {
