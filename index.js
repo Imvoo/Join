@@ -41,12 +41,18 @@ setInterval(function() {
 	io.emit('gap update', value);
 }, 5000);
 
-io.on('connection', function(socket) {
+function determineUsername() {
     var random1 = Math.floor(Math.random() * adjectives.length - 1);
     var random2 = Math.floor(Math.random() * fruits.length - 1);
-    var userName = adjectives[random1] + fruits[random2];    
+    var userName = adjectives[random1] + fruits[random2];  
     
-    console.log("Connection: " + socket.id + " " + random1 + " " + random2 + " " + userName)
+    return userName;    
+}
+
+io.on('connection', function(socket) {
+    var userName = determineUsername();
+    
+    console.log("Connection: " + socket.id + " " + random1 + " " + random2 + " " + userName);
 	socket.emit('identify', [socket.id, userName]);
 	socket.emit('deadList', deadList);
 	socket.emit('players', players);
@@ -116,6 +122,7 @@ http.listen(2345, function() {
             console.log(err);
         }
         adjectives.push(data);
+        console.log(data);
     });
 
     fs.readFile('./fruits.txt', 'utf8', function(err, data) {
