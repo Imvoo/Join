@@ -15,6 +15,9 @@ var listener = function() {
 		if (d == "start") {
 			io.emit("start");
 		}
+        else if (d == "reset") {
+            io.emit("reset");
+        }
 		// players.push(d);
 		// io.emit("players", players)
 	});
@@ -35,6 +38,7 @@ setInterval(function() {
 }, 5000);
 
 io.on('connection', function(socket) {
+    console.log("Connection: " + socket.id)
 	socket.emit('identify', socket.id);
 	socket.emit('deadList', deadList);
 	socket.emit('players', players);
@@ -49,27 +53,32 @@ io.on('connection', function(socket) {
 	});
 
 	// Data = id, x, y
-	socket.on('position', function(data) {
-		var stored = false;
+	// socket.on('position', function(data) {
+	// 	var stored = false;
 
-		positions.forEach(function(item) {
-			if (item[0] == data[0]) {
-				item = data;
-				stored = true;
-			}
-		});
+	// 	positions.forEach(function(item) {
+	// 		if (item[0] == data[0]) {
+	// 			item = data;
+	// 			stored = true;
+	// 		}
+	// 	});
 
-		if (stored == false) {
-			positions.push(data);
-		}
-	});
+	// 	if (stored == false) {
+	// 		positions.push(data);
+	// 	}
+	// });
 
 	socket.on('player death', function(id) {
 		deadList.push(id);
 		socket.broadcast.emit('player death', id);
 	});
+    
+    socket.on('identify myself', function(inID) {
+        socket.id = inID;
+    });
 
 	socket.on('disconnect', function() {
+        console.log("Disconnection: " + socket.id)
 		var result = null;
 		for (var i = 0; i < players.length; i++) {
 			if (socket.id == players[i][0]) {

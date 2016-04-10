@@ -30,6 +30,8 @@ var allPlayers = [];
 
 var startGameNow;
 
+var urlID;
+
 function preload() {
 	game.load.image("char", "../img/turkey_small.png");
 	game.load.image("background", "../img/background_real2x.png");
@@ -94,6 +96,11 @@ function create() {
 	startGameNow = false;
 
     SetupIOConnections();
+    
+    setInterval(function() {
+        socket.emit("identify myself", urlID);
+        console.log("identifying myself, " + urlID);
+    }, 1000);
 }
 
 var SetupIOConnections = function() {
@@ -105,13 +112,23 @@ var SetupIOConnections = function() {
 	socket.on('deadList', UpdateDeadlist);
 	socket.on('gap update', UpdateGap);
 	socket.on('identify', Identify);
+    socket.on('reset', ResetGame);
 
 	// Netcode is really bad atm...
 	// socket.on('player positions', UpdatePositions);
 }
 
-function Identify(id) {
+function ResetGame() {
+    startGameNow = false;
+    PositionWalls(walls);
+    allPlayers.forEach(function(player) {
+        player[1].reset(player[2], 200);
+    });``
+}
+
+function Identify(inUrlID) {
 	console.log(id);
+    urlID = inUrlID;
 }
 
 function UpdateGap(gapRange) {
