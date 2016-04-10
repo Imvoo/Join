@@ -50,12 +50,15 @@ function determineUsername() {
 }
 
 io.on('connection', function(socket) {
-    var userName = determineUsername();
-    
     console.log("Connection: " + socket.id + " " + userName);
-	socket.emit('identify', [socket.id, userName]);
+
 	socket.emit('deadList', deadList);
 	socket.emit('players', players);
+
+    socket.on('identify me', function() {
+        var userName = determineUsername();
+       	socket.emit('identify', [socket.id, userName]); 
+    });
 
 	socket.on('new player', function(id) {
 		players.push([socket.id, id]);

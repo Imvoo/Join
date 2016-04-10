@@ -46,6 +46,7 @@ function create() {
     nameStyle = {font: "10px Arial", fill:"White"};
     
     socket = io.connect("http://167.160.162.247:2345", {'multiplex': false});
+    socket.emit('identify me');
 
 	startGameNow = false;
 
