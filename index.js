@@ -9,7 +9,8 @@ var players = [];
 var positions = [];
 var deadList = [];
 
-var count = 0;
+var count = 0 
+var oldCount = 0;
 
 var adjectives = [];
 var fruits = [];
@@ -20,6 +21,7 @@ var listener = function() {
 		d = d.toString().trim()
 		if (d == "start") {
 			io.emit("start");
+            oldCount = players.count;
 		}
         else if (d == "reset") {
             io.emit("reset");
@@ -57,9 +59,10 @@ io.on('connection', function(socket) {
     socket.on('wall finished', function() {
         count = count + 1;
         
-        if (count >= players.length) {
+        if (count >= oldCount || count >= players.length) {
             io.emit('position walls');
             count = 0;
+            oldCount = players.length;
         }
     });
 
