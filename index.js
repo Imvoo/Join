@@ -54,7 +54,7 @@ io.on('connection', function(socket) {
     var random2 = Math.floor(Math.random() * fruits.length - 1);
     var userName = adjectives[random1] + fruits[random2];    
     
-    console.log("Connection: " + socket.id)
+    console.log("Connection: " + socket.id + " " + random1 + " " + random2 + " " + userName)
 	socket.emit('identify', [socket.id, userName]);
 	socket.emit('deadList', deadList);
 	socket.emit('players', players);

@@ -125,10 +125,11 @@ function ResetGame() {
 
 function Identify(inUrlID) {
     var nameStyle = {font: "10px Arial", fill:"White"};
+    console.log(inUrlID);
     urlID = inUrlID[0];
     userName = inUrlID[1];
     
-    character.userName = game.add.text(character.x + character.width / 2, character.y - 20, userName, nameStyle);
+    character.userName = game.add.text(character.x + character.width / 2, character.y - 20, "U:" + userName, nameStyle);
     socket.emit('new player', [id, 30+shift, userName]);
 }
 
