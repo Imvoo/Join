@@ -224,6 +224,7 @@ function DeletePlayer(newID) {
 	console.log(newID);
     for (var i = 0; i < allPlayers.length; i++) {
 		if (allPlayers[i][0] == newID[1][0]) {
+            allPlayers[i][1].userName.destroy();
             allPlayers[i][1].kill();
             allPlayers.pop(i);
             break;
@@ -265,8 +266,13 @@ function update() {
 
 function UpdateUsernames() {
     allPlayers.forEach(function(player) {
-       player[1].userName.x = player[1].x + (player[1].width / 2);
-       player[1].userName.y = player[1].y - 15; 
+       if (player[1].alive) {
+        player[1].userName.x = player[1].x + (player[1].width / 2) - player[1].username.width;
+        player[1].userName.y = player[1].y - 30;
+       }
+       else {
+           player[1].username.x = -900;
+       } 
     });
 }
 
