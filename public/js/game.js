@@ -20,6 +20,8 @@ var nameStyle;
 var deathText;
 var userName;
 
+var emitted;
+
 var walls = [];
 var wallsGap = 150;
 var wallSpeed = 100;
@@ -43,6 +45,7 @@ function preload() {
 }
 
 function create() {
+    emitted = false;
     nameStyle = {font: "12px Arial", fill:"White"};
     
     socket = io.connect("http://167.160.162.247:2345", {'multiplex': false});
@@ -120,6 +123,7 @@ var SetupIOConnections = function() {
 
 function PositionMe() {
     PositionWalls(walls);
+    emitted = false;
 }
 
 function ResetGame() {
@@ -290,8 +294,9 @@ function MoveWalls(walls) {
 		item.x -= wallSpeed * game.time.physicsElapsed;
 	});
 
-	if (walls[0].x + walls[0].width < 0) {
+	if (walls[0].x + walls[0].width < 0 && emitted == false) {
 		socket.emit('wall finished');
+        emitted = true;
 	}
 }
 
