@@ -263,8 +263,8 @@ function update() {
 
 function UpdateUsernames() {
     allPlayers.forEach(function(player) {
-       singleID[1].userName.x = singleID[1].x + (singleID[1].width / 2) - singleID[1].userName.width;
-       singleID[1].userName.y = singleID[1].y - 15; 
+       player[1].userName.x = player[1].x + (player[1].width / 2) - player[1].userName.width;
+       player[1].userName.y = player[1].y - 15; 
     });
 }
 
