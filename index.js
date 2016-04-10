@@ -27,14 +27,6 @@ var listener = function() {
 	});
 };
 
-fs.readFile('./adjectives.txt', 'utf8', function(err, data) {
-    adjectives.push(data);
-});
-
-fs.readFile('./fruits.txt', 'utf8', function(err, data) {
-    fruits.push(data);
-});
-
 app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/index.html');
 });
@@ -118,4 +110,18 @@ io.on('connection', function(socket) {
 http.listen(2345, function() {
 	console.log("Listening on :2345.");
 	listener();
+    
+    fs.readFile('./adjectives.txt', 'utf8', function(err, data) {
+        if (err != null) {
+            console.log(err);
+        }
+        adjectives.push(data);
+    });
+
+    fs.readFile('./fruits.txt', 'utf8', function(err, data) {
+        if (err != null) {
+            console.log(err);
+        }        
+        fruits.push(data);
+    });    
 });
