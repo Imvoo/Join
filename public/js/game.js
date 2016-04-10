@@ -13,8 +13,10 @@ var character;
 var keyInput;
 
 var style = { font: "20px Arial", fill:"White" };
+var nameStyle;
 
 var deathText;
+var userName;
 
 var walls = [];
 var wallsGap = 150;
@@ -39,9 +41,15 @@ function preload() {
 }
 
 function create() {
-	randAmount = 200;
+    nameStyle = {font: "10px Arial", fill:"White"};
+    
+    socket = io.connect("http://167.160.162.247:2345", {'multiplex': false});
 
-	console.log("me: " + id);
+	startGameNow = false;
+
+    SetupIOConnections();
+    
+	randAmount = 200;
 
 	game.stage.disableVisibilityChange = true;
 	game.stage.backgroundColor = "#ffffff";
@@ -65,6 +73,8 @@ function create() {
 	game.physics.p2.enable(character);
 	character.body.fixedRotation = true;
 	character.body.setRectangle(0,0);
+    
+    character.userName = game.add.text(character.x + character.width / 2, character.y - 20, userName, nameStyle);
 
 	keyInput = game.input.keyboard.createCursorKeys();
 
@@ -88,19 +98,8 @@ function create() {
     allPlayers.push([id, character, shift+30]);
     character.body.setCollisionGroup(playerCollisionGroup);
 	character.isJumping = false;
-
-    socket = io.connect("http://167.160.162.247:2345", {'multiplex': false});
-
-	socket.emit('new player', [id, 30+shift]);
-
-	startGameNow = false;
-
-    SetupIOConnections();
     
-    setInterval(function() {
-        socket.emit("identify myself", urlID);
-        console.log("identifying myself, " + urlID);
-    }, 1000);
+    socket.emit('new player', [id, 30+shift, userName]);
 }
 
 var SetupIOConnections = function() {
@@ -127,8 +126,8 @@ function ResetGame() {
 }
 
 function Identify(inUrlID) {
-	console.log(id);
-    urlID = inUrlID;
+    urlID = inUrlID[0];
+    userName = inUrlID[1];
 }
 
 function UpdateGap(gapRange) {
@@ -195,8 +194,7 @@ function CreatePlayer(newID) {
 			newChar.body.fixedRotation = true;
 			newChar.alpha = 0.4;
 
-			console.log("created");
-			// console.log(singleID);
+            newChar.userName = game.add.text(0, 0, singleID[2], nameStyle);
 
 			if (isDead == true) {
 				newChar.kill();
@@ -253,8 +251,14 @@ function update() {
 		character.kill();
 		socket.emit('player death', id);
 	}
+    
+    UpdateUsernames();
 
     // socket.emit('position', [id, character.x, character.y]);
+}
+
+function UpdateUsernames() {
+    
 }
 
 function Jump(object) {

@@ -2,11 +2,15 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var fs = require('fs');
 
 var allSockets = [];
 var players = [];
 var positions = [];
 var deadList = [];
+
+var adjectives = [];
+var fruits = [];
 
 var stdin = process.openStdin();
 var listener = function() {
@@ -23,6 +27,14 @@ var listener = function() {
 	});
 };
 
+fs.readFile('./adjectives.txt', 'utf8', function(err, data) {
+    adjectives.push(data);
+});
+
+fs.readFile('./fruits.txt', 'utf8', function(err, data) {
+    fruits.push(data);
+});
+
 app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/index.html');
 });
@@ -38,8 +50,12 @@ setInterval(function() {
 }, 5000);
 
 io.on('connection', function(socket) {
+    var random1 = Math.floor(Math.random() * adjectives.length - 1);
+    var random2 = Math.floor(Math.random() * fruits.length - 1);
+    var userName = adjectives[random1] + fruits[random2];    
+    
     console.log("Connection: " + socket.id)
-	socket.emit('identify', socket.id);
+	socket.emit('identify', [socket.id, userName]);
 	socket.emit('deadList', deadList);
 	socket.emit('players', players);
 
@@ -72,10 +88,6 @@ io.on('connection', function(socket) {
 		deadList.push(id);
 		socket.broadcast.emit('player death', id);
 	});
-    
-    socket.on('identify myself', function(inID) {
-        socket.id = inID;
-    });
 
 	socket.on('disconnect', function() {
         console.log("Disconnection: " + socket.id)
