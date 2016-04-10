@@ -87,7 +87,8 @@ io.on('connection', function(socket) {
 
 		positions.forEach(function(item) {
 			if (item[0] == data[0]) {
-				item = data;
+				item[1] = data[1];
+                item[2] = data[2];
 				stored = true;
 			}
 		});
