@@ -50,7 +50,7 @@ function determineUsername() {
 }
 
 io.on('connection', function(socket) {
-    console.log("Connection: " + socket.id + " " + userName);
+    console.log("Connection: " + socket.id);
 
 	socket.emit('deadList', deadList);
 	socket.emit('players', players);
