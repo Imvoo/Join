@@ -56,7 +56,11 @@ io.on('connection', function(socket) {
 	socket.emit('players', players);
 
     socket.on('identify me', function() {
-        var userName = determineUsername();
+        var random1 = Math.floor(Math.random() * adjectives.length - 1);
+        var random2 = Math.floor(Math.random() * fruits.length - 1);
+        console.log(random1);
+        console.log(random2);
+        var userName = adjectives[random1] + fruits[random2];
        	socket.emit('identify', [socket.id, userName]); 
     });
 
