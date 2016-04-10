@@ -24,7 +24,7 @@ var emitted;
 
 var walls = [];
 var wallsGap = 150;
-var wallSpeed = 100;
+var wallSpeed = 200;
 
 var randAmount;
 
