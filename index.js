@@ -129,14 +129,19 @@ http.listen(2345, function() {
         if (err != null) {
             console.log(err);
         }
-        adjectives.push(data);
-        console.log(data);
+        var array = data.toString().split("\n");
+        array.forEach(function(line) {
+            adjectives.push(line);
+        });
     });
 
     fs.readFile('./fruits.txt', 'utf8', function(err, data) {
         if (err != null) {
             console.log(err);
         }        
-        fruits.push(data);
+        var array = data.toString().split("\n");
+        array.forEach(function(line) {
+            fruits.push(line);
+        });
     });    
 });
