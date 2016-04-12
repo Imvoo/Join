@@ -290,7 +290,7 @@ function DeletePlayer(newID) {
 }
 
 function update() {
-	if (Date.now() - timeBeginning > 60000) {
+	if (Date.now() - timeBeginning > 240000) {
 		DisconnectPlayer(id);
 	}
 
