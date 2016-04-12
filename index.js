@@ -88,18 +88,29 @@ var tmpWarning = [];
 
 setInterval(function() {
 	positions.forEach(function(player) {
-		if (player[2] == 200) {
-			if (tmpWarning.indexOf(player[0]) != -1) {
-				io.emit('logout', player[0]);
-				tmpWarning.splice(tmpWarning.indexOf(player[0]),1);
+		var done = false;
+		var currentWarning = null;
+		tmpWarning.forEach(function (warning) {
+			if (player[0] == warning[0]) {
+				done = true;
+				currentWarning = warning;
 			}
-			else {
-				tmpWarning.push(player[0]);
-			}
+		});
+
+		if (done == false) {
+			tmpWarning.push(player);
 		}
 		else {
-			if (tmpWarning.indexOf(player[0]) != -1) {
-				tmpWarning.splice(tmpWarning.indexOf(player[0]),1);
+			if (player[2] == currentWarning[2] && player[2] < 590) {
+				io.emit('logout', player[0]);
+			}
+			else {
+				tmpWarning.forEach(function (warning) {
+					if (player[0] == warning[0]) {
+						player[1] = warning[1];
+						player[2] = warning[2];
+					}
+				});
 			}
 		}
 	});
