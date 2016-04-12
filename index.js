@@ -24,7 +24,7 @@ var inactiveTimer = 60;
 var highscore;
 var highscorePlayer = "";
 
-var wallsPast = 1;
+var wallsPast = 0;
 
 var stdin = process.openStdin();
 var listener = function() {
@@ -119,8 +119,8 @@ io.on('connection', function(socket) {
         count = count + 1;
 
         if (count >= startedAlive) {
-            io.emit('position walls', wallsPast);
 			wallsPast += 1;
+            io.emit('position walls', wallsPast);
             count = 0;
         }
     });
