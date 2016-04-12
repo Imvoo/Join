@@ -25,6 +25,7 @@ var deathText;
 var userName;
 
 var textDisconnected;
+var textHighScore;
 
 var emitted;
 
@@ -99,6 +100,8 @@ function create() {
 	textWalls = game.add.text(game.world.width - 70, 70, "Walls passed: 0", style);
 	textWalls.x = screenWidth - 10 - textWalls.width;
 
+	textHighScore = game.add.text(-900, -900, "Highscore: ", style);
+
 	shift = Math.floor(Math.random() * 170);
 
 	character = game.add.sprite(30 + shift, 200, "char");
@@ -148,9 +151,16 @@ var SetupIOConnections = function() {
     socket.on('position walls', PositionMe);
 	socket.on('timer', UpdateTimer);
 	socket.on('logout', DisconnectPlayer);
+	socket.on('highscore', UpdateHighscore);
 
 	// Netcode is really bad atm...
 	socket.on('player positions', UpdatePositions);
+}
+
+function UpdateHighscore(highscore) {
+	textHighScore.text = "Highscore: " + highscore[0] + " walls by " + highscore[1] + "!";
+	textHighScore.x = screenWidth - 10 - textHighScore.width;
+	textHighScore.y = screenHeight - 10 - textHighScore.height;
 }
 
 function DisconnectPlayer(inID) {

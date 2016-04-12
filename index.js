@@ -21,7 +21,10 @@ var fruits = [];
 
 var inactiveTimer = 60;
 
-var wallsPast = 0;
+var highscore;
+var highscorePlayer = "";
+
+var wallsPast = 1;
 
 var stdin = process.openStdin();
 var listener = function() {
@@ -129,6 +132,7 @@ io.on('connection', function(socket) {
        	socket.emit('identify', [socket.id, userName, started]);
         socket.emit('deadList', deadList);
 	    socket.emit('players', players);
+		socket.emit('highscore', [highscore, highscorePlayer]);
     });
 
 	socket.on('new player', function(id) {
@@ -171,6 +175,19 @@ io.on('connection', function(socket) {
 		startedAlive -= 1;
 
 		if (startedAlive <= 0 && started == true) {
+			if (wallsPast > highscore) {
+				highscore = wallsPast;
+				players.forEach(function(player) {
+					if (player[1][0] == id) {
+						highscorePlayer = player[1][2];
+					}
+				});
+
+				fs.unlink('./highscore.txt');
+				fs.writeFile('./highscore.txt', highscore+'\n'+highscorePlayer.toString());
+				socket.emit('highscore', [highscore, highscorePlayer]);
+			}
+
 			started = false;
 			startSeconds = startDelay;
 			io.emit('reset');
@@ -231,6 +248,22 @@ http.listen(2345, function() {
             fruits.push(line);
         });
     });
+
+	fs.stat("./highscore.txt", function(err, stat) {
+		if (err.code == "ENOENT") {
+			fs.writeFile('./highscore.txt', '0\nNoone');
+		}
+	});
+
+	fs.readFile('./highscore.txt', 'utf8', function(err, data) {
+        if (err != null) {
+            console.log(err);
+        }
+        var array = data.toString().split("\n");
+
+		highscore = array[0];
+		highscorePlayer = array[1];
+	});
 
     // NETCODE TOO HARD FOR ME :'(
 	setInterval(function() {
