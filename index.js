@@ -183,7 +183,6 @@ io.on('connection', function(socket) {
 					}
 				});
 
-				fs.unlink('./highscore.txt');
 				fs.writeFile('./highscore.txt', highscore+'\n'+highscorePlayer.toString());
 				socket.emit('highscore', [highscore, highscorePlayer]);
 			}
@@ -251,7 +250,6 @@ http.listen(2345, function() {
 
 	fs.stat("./highscore.txt", function(err, stat) {
 		if(err == null) {
-			console.log('File exists');
 		} else if(err.code == 'ENOENT') {
 			fs.writeFileSync('./highscore.txt', "0\nNoone");
 		} else {

@@ -158,9 +158,9 @@ var SetupIOConnections = function() {
 }
 
 function UpdateHighscore(highscore) {
-	textHighScore.text = "Highscore: " + highscore[0] + " walls by " + highscore[1] + "!";
+	textHighScore.text = "Highscore: " + highscore[0] + " Walls - " + highscore[1] + "!";
 	textHighScore.x = screenWidth - 10 - textHighScore.width;
-	textHighScore.y = screenHeight - 10 - textHighScore.height;
+	textHighScore.y = screenHeight - 5 - textHighScore.height;
 }
 
 function DisconnectPlayer(inID) {
