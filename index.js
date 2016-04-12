@@ -10,7 +10,12 @@ var positions = [];
 var deadList = [];
 
 var count = 0
-var oldCount = 0;
+
+var startDelay = 20;
+var startSeconds = startDelay;
+
+var started = false;
+var startedAlive = 0;
 
 var adjectives = [];
 var fruits = [];
@@ -21,7 +26,6 @@ var listener = function() {
 		d = d.toString().trim()
 		if (d == "start") {
 			io.emit("start");
-            oldCount = players.count;
 		}
         else if (d == "reset") {
             io.emit("reset");
@@ -45,6 +49,27 @@ setInterval(function() {
 	io.emit('gap update', value);
 }, 5000);
 
+setInterval(function() {
+	if (startSeconds <= 0 && started == false) {
+		io.emit('start', value);
+		startedAlive = players.length;
+		startSeconds = startDelay;
+	}
+	else if (started == true) {
+		io.emit('start', 'Started');
+	}
+	else {
+		startSeconds -= 1;
+		io.emit('timer', startSeconds)
+	}
+
+	if (started == true && startedAlive <= 0) {
+			started = false;
+			startSeconds = startDelay;
+			io.emit('reset')
+	}
+}, 1000);
+
 function determineUsername() {
     var random1 = Math.floor(Math.random() * adjectives.length - 1);
     var random2 = Math.floor(Math.random() * fruits.length - 1);
@@ -59,10 +84,9 @@ io.on('connection', function(socket) {
     socket.on('wall finished', function() {
         count = count + 1;
 
-        if (count >= oldCount || count >= players.length) {
+        if (count >= startedAlive) {
             io.emit('position walls');
             count = 0;
-            oldCount = players.length;
         }
     });
 
@@ -70,7 +94,7 @@ io.on('connection', function(socket) {
         var random1 = Math.floor(Math.random() * adjectives.length);
         var random2 = Math.floor(Math.random() * fruits.length);
         var userName = adjectives[random1] + fruits[random2];
-       	socket.emit('identify', [socket.id, userName]);
+       	socket.emit('identify', [socket.id, userName, started]);
         socket.emit('deadList', deadList);
 	    socket.emit('players', players);
     });
@@ -104,6 +128,13 @@ io.on('connection', function(socket) {
 	socket.on('player death', function(id) {
 		deadList.push(id);
 		socket.broadcast.emit('player death', id);
+		startedAlive -= 1;
+
+		if (startedAlive <= 0) {
+			started = false;
+			startSeconds = startDelay;
+			io.emit('reset')
+		}
 	});
 
 	socket.on('disconnect', function() {
@@ -122,8 +153,13 @@ io.on('connection', function(socket) {
             players.splice(index, 1);
 		}
 		socket.broadcast.emit("delete player", result);
-		console.log("dcd: " + result);
-		console.log(players);
+		startedAlive -= 1;
+
+		if (startedAlive <= 0) {
+			started = false;
+			startSeconds = startDelay;
+			io.emit('reset')
+		}
 	});
 });
 

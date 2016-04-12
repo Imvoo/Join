@@ -11,6 +11,9 @@ var background;
 var shift;
 
 var textJoin;
+var textTimer;
+var textConnected;
+
 var character;
 var keyInput;
 
@@ -73,6 +76,10 @@ function create() {
 	textJoin = game.add.text(game.world.width - 10, 10, text, style);
 	textJoin.x -= textJoin.width;
 
+	textConnected = game.add.text(game.world.width - 10, 30, "Connected:", style);
+
+	textTimer = game.add.text(game.world.width - 10, 50, "Timer:", style);
+
 	shift = Math.floor(Math.random() * 170);
 
 	character = game.add.sprite(30 + shift, 200, "char");
@@ -120,9 +127,20 @@ var SetupIOConnections = function() {
 	socket.on('identify', Identify);
     socket.on('reset', ResetGame);
     socket.on('position walls', PositionMe);
+	socket.on('timer', UpdateTimer);
 
 	// Netcode is really bad atm...
-	// socket.on('player positions', UpdatePositions);
+	socket.on('player positions', UpdatePositions);
+}
+
+function UpdateTimer(seconds) {
+	if (seconds == "Started") {
+		textTimer.text = "Game has started!";
+	}
+	else {
+		textTimer.text = "Timer: " + seconds.toString();
+	}
+	textTimer.x = screenWidth - 10 - textTimer.width;
 }
 
 function PositionMe() {
@@ -135,7 +153,7 @@ function ResetGame() {
     PositionWalls(walls);
     allPlayers.forEach(function(player) {
         player[1].reset(player[2], 200);
-    });``
+    });
 }
 
 function Identify(inUrlID) {
@@ -143,6 +161,8 @@ function Identify(inUrlID) {
     console.log(inUrlID);
     urlID = inUrlID[0];
     userName = inUrlID[1];
+	startGameNow = true;
+	character.kill();
 
     character.userName.text = userName;
     socket.emit('new player', [id, 30+shift, userName]);
@@ -215,7 +235,7 @@ function CreatePlayer(newID) {
 
             allPlayers.push([singleID[0], newChar, singleID[1]]);
 
-			if (isDead == true) {
+			if (isDead == true || startGameNow == true) {
 				newChar.kill();
 			}
         }
@@ -228,18 +248,19 @@ function CreatePlayer(newID) {
 }
 
 function UpdateHeaderText() {
-    textJoin.text = "// Join | Click up arrow to jump! | Connected: " + allPlayers.length.toString();
-    textJoin.x = screenWidth - 10 - textJoin.width;
+	textConnected.text = "Connected: " + allPlayers.length.toString();
+	textConnected.x = screenWidth - 10 - textConnected.width;
+
+    // textJoin.text = "// Join | Click up arrow to jump!";
+    // textJoin.x = screenWidth - 10 - textJoin.width;
 }
 
 function DeletePlayer(newID) {
-	console.log("delete under")
-	console.log(newID);
     for (var i = 0; i < allPlayers.length; i++) {
 		if (allPlayers[i][0] == newID[1][0]) {
             allPlayers[i][1].userName.destroy();
             allPlayers[i][1].kill();
-            allPlayers.pop(i);
+            allPlayers.splice(i,1);
             break;
         }
     }
