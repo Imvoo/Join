@@ -23,6 +23,8 @@ var nameStyle;
 var deathText;
 var userName;
 
+var textDisconnected;
+
 var emitted;
 
 var walls = [];
@@ -59,6 +61,8 @@ function create() {
     emitted = false;
     nameStyle = {font: "12px Arial", fill:"White"};
 
+    var largeStyle = {font: "20px Arial", fill:"White"};
+
     socket = io.connect("http://167.160.162.247:2345", {'multiplex': false});
     socket.emit('identify me');
 
@@ -87,6 +91,8 @@ function create() {
 	textConnected = game.add.text(game.world.width - 10, 30, "Connected:", style);
 
 	textTimer = game.add.text(game.world.width - 10, 50, "Timer:", style);
+
+	textDisconnected = game.add.text(-9000, screenHeight/2, "You have been disconnected from the server.", largeStyle)
 
 	shift = Math.floor(Math.random() * 170);
 
@@ -140,6 +146,11 @@ var SetupIOConnections = function() {
 
 	// Netcode is really bad atm...
 	socket.on('player positions', UpdatePositions);
+}
+
+window.onblur = function() {
+	socket.disconnect(true);
+	textDisconnected.x = screenWidth / 2 - (textDisconnected.width / 2);
 }
 
 function DisconnectPlayer(inID) {
