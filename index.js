@@ -250,20 +250,29 @@ http.listen(2345, function() {
     });
 
 	fs.stat("./highscore.txt", function(err, stat) {
-		if (err.code == "ENOENT") {
-			fs.writeFile('./highscore.txt', '0\nNoone');
+		if(err == null) {
+			console.log('File exists');
+		} else if(err.code == 'ENOENT') {
+			fs.writeFileSync('./highscore.txt', "0\nNoone");
+		} else {
+			console.log('Some other error: ', err.code);
 		}
 	});
 
-	fs.readFile('./highscore.txt', 'utf8', function(err, data) {
-        if (err != null) {
-            console.log(err);
-        }
-        var array = data.toString().split("\n");
+	var data = fs.readFileSync('./highscore.txt');
+	var array = data.toString().split("\n");
+	highscore = array[0];
+	highscorePlayer = array[1];
 
-		highscore = array[0];
-		highscorePlayer = array[1];
-	});
+	// fs.readFileSync('./highscore.txt', 'utf8', function(err, data) {
+    //     if (err != null) {
+    //         console.log(err);
+    //     }
+    //     var array = data.toString().split("\n");
+
+	// 	highscore = array[0];
+	// 	highscorePlayer = array[1];
+	// });
 
     // NETCODE TOO HARD FOR ME :'(
 	setInterval(function() {
