@@ -164,12 +164,11 @@ function Identify(inUrlID) {
 
 	if (inUrlID[2] == true) {
 		startGameNow = true;
+		character.kill();
 	}
 	else {
 		startGameNow = false;
 	}
-
-	character.kill();
 
     character.userName.text = userName;
     socket.emit('new player', [id, 30+shift, userName]);
