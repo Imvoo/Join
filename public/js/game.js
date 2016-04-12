@@ -41,6 +41,8 @@ var startGameNow;
 
 var urlID;
 
+var followRules;
+
 function preload() {
 	game.load.image("char", "../img/turkey_small.png");
 	game.load.image("background", "../img/background_real2x.png");
@@ -48,6 +50,7 @@ function preload() {
 }
 
 function create() {
+	followRules = false;
     emitted = false;
     nameStyle = {font: "12px Arial", fill:"White"};
 
@@ -138,7 +141,7 @@ function UpdateTimer(seconds) {
 		textTimer.text = "Game has started! Please wait for it to end.";
 	}
 	else {
-		textTimer.text = "Timer: " + seconds.toString();
+		textTimer.text = "Time till game starts: " + seconds.toString();
 	}
 	textTimer.x = screenWidth - 10 - textTimer.width;
 }
@@ -241,11 +244,13 @@ function CreatePlayer(newID) {
 
             allPlayers.push([singleID[0], newChar, singleID[1]]);
 
-			if (isDead == true || startGameNow == true) {
+			if (followRules == false && (isDead == true || startGameNow == true)) {
 				newChar.kill();
 			}
         }
     });
+
+	followRules = true;
 
 	console.log("---------");
 	console.log(allPlayers);
