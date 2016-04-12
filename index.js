@@ -32,6 +32,7 @@ var listener = function() {
 		}
         else if (d == "reset") {
             io.emit("reset");
+			deadList = [];
         }
 		// players.push(d);
 		// io.emit("players", players)
@@ -71,7 +72,8 @@ setInterval(function() {
 	if (started == true && startedAlive <= 0) {
 			started = false;
 			startSeconds = startDelay;
-			io.emit('reset')
+			io.emit('reset');
+			deadList = [];
 	}
 
 	players.forEach(function(player) {
@@ -166,7 +168,8 @@ io.on('connection', function(socket) {
 		if (startedAlive <= 0 && started == true) {
 			started = false;
 			startSeconds = startDelay;
-			io.emit('reset')
+			io.emit('reset');
+			deadList = [];
 		}
 	});
 
@@ -195,6 +198,7 @@ io.on('connection', function(socket) {
 			started = false;
 			startSeconds = startDelay;
 			io.emit('reset');
+			deadList = [];
 		}
 	});
 });
