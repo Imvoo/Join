@@ -161,7 +161,6 @@ function Identify(inUrlID) {
     console.log(inUrlID);
     urlID = inUrlID[0];
     userName = inUrlID[1];
-	startGameNow = true;
 	character.kill();
 
     character.userName.text = userName;
