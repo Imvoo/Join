@@ -122,7 +122,7 @@ var SetupIOConnections = function() {
     socket.on('position walls', PositionMe);
 
 	// Netcode is really bad atm...
-	socket.on('player positions', UpdatePositions);
+	// socket.on('player positions', UpdatePositions);
 }
 
 function PositionMe() {
