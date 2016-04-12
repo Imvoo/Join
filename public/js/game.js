@@ -28,8 +28,8 @@ var textDisconnected;
 var emitted;
 
 var walls = [];
-var wallsGap = 175;
-var wallSpeed = 200;
+var wallsGap = 150;
+var wallSpeed = 300;
 
 var randAmount;
 
