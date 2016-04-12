@@ -72,7 +72,7 @@ function create() {
 
 	randAmount = 200;
 
-	game.stage.disableVisibilityChange = false;
+	game.stage.disableVisibilityChange = true;
 	game.stage.backgroundColor = "#ffffff";
 	// game.add.image(0, 0, "background");
 	background = game.add.tileSprite(0,0,800,600,'background');
