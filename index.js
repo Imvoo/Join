@@ -86,35 +86,35 @@ setInterval(function() {
 
 var tmpWarning = [];
 
-setInterval(function() {
-	positions.forEach(function(player) {
-		var done = false;
-		var currentWarning = null;
-		tmpWarning.forEach(function (warning) {
-			if (player[0] == warning[0]) {
-				done = true;
-				currentWarning = warning;
-			}
-		});
+// setInterval(function() {
+// 	positions.forEach(function(player) {
+// 		var done = false;
+// 		var currentWarning = null;
+// 		tmpWarning.forEach(function (warning) {
+// 			if (player[0] == warning[0]) {
+// 				done = true;
+// 				currentWarning = warning;
+// 			}
+// 		});
 
-		if (done == false) {
-			tmpWarning.push(player);
-		}
-		else {
-			if (player[2] == currentWarning[2] && player[2] < 590) {
-				io.emit('logout', player[0]);
-			}
-			else {
-				tmpWarning.forEach(function (warning) {
-					if (player[0] == warning[0]) {
-						player[1] = warning[1];
-						player[2] = warning[2];
-					}
-				});
-			}
-		}
-	});
-}, 5000);
+// 		if (done == false) {
+// 			tmpWarning.push(player);
+// 		}
+// 		else {
+// 			if (player[2] == currentWarning[2] && player[2] < 590) {
+// 				io.emit('logout', player[0]);
+// 			}
+// 			else {
+// 				tmpWarning.forEach(function (warning) {
+// 					if (player[0] == warning[0]) {
+// 						player[1] = warning[1];
+// 						player[2] = warning[2];
+// 					}
+// 				});
+// 			}
+// 		}
+// 	});
+// }, 5000);
 
 function CheckInstable(id) {
 	setTimeout(function() {
