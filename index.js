@@ -54,6 +54,7 @@ setInterval(function() {
 		io.emit('start', value);
 		startedAlive = players.length;
 		startSeconds = startDelay;
+		started = true;
 	}
 	else if (started == true) {
 		io.emit('start', 'Started');
@@ -130,7 +131,7 @@ io.on('connection', function(socket) {
 		socket.broadcast.emit('player death', id);
 		startedAlive -= 1;
 
-		if (startedAlive <= 0) {
+		if (startedAlive <= 0 && started == true) {
 			started = false;
 			startSeconds = startDelay;
 			io.emit('reset')
@@ -155,7 +156,7 @@ io.on('connection', function(socket) {
 		socket.broadcast.emit("delete player", result);
 		startedAlive -= 1;
 
-		if (startedAlive <= 0) {
+		if (startedAlive <= 0 && started == true) {
 			started = false;
 			startSeconds = startDelay;
 			io.emit('reset')
