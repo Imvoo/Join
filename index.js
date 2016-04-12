@@ -4,7 +4,6 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
 
-var allSockets = [];
 var players = [];
 var positions = [];
 var deadList = [];
@@ -84,6 +83,27 @@ setInterval(function() {
 		}
 	});
 }, 1000);
+
+var tmpWarning = [];
+
+setInterval(function() {
+	positions.forEach(function(player) {
+		if (player[2] == 200) {
+			if (tmpWarning.indexOf(player[0]) != -1) {
+				io.emit('logout', player[0]);
+				tmpWarning.splice(tmpWarning.indexOf(player[0]),1);
+			}
+			else {
+				tmpWarning.push(player[0]);
+			}
+		}
+		else {
+			if (tmpWarning.indexOf(player[0]) != -1) {
+				tmpWarning.splice(tmpWarning.indexOf(player[0]),1);
+			}
+		}
+	});
+}, 5000);
 
 function CheckInstable(id) {
 	setTimeout(function() {
