@@ -43,6 +43,12 @@ var urlID;
 
 var followRules;
 
+var timeBeginning = Date.now();
+
+function updateTime(){
+	timeBeginning = Date.now();
+}
+
 function preload() {
 	game.load.image("char", "../img/turkey_small.png");
 	game.load.image("background", "../img/background_real2x.png");
@@ -50,6 +56,8 @@ function preload() {
 }
 
 function create() {
+	timeBeginning = Date.now();
+
 	followRules = false;
     emitted = false;
     nameStyle = {font: "12px Arial", fill:"White"};
@@ -92,12 +100,12 @@ function create() {
     character.userName = game.add.text(character.x + character.width / 2, character.y - 20, "", nameStyle);
 
 	keyInput = game.input.keyboard.createCursorKeys();
+	game.input.keyboard.addCallbacks(game, updateTime, updateTime);
 
 	// Collision groups!
 	playerCollisionGroup = game.physics.p2.createCollisionGroup();
 	var wallsCollisionGroup = game.physics.p2.createCollisionGroup();
     game.physics.p2.updateBoundsCollisionGroup();
-
 
 	wall1 = game.add.sprite(900, 50, "wall");
 	wall2 = game.add.sprite(900, 50, "wall");
@@ -280,7 +288,15 @@ function DeletePlayer(newID) {
 }
 
 function update() {
+	if (Date.now() - timeBeginning > 30000) {
+		socket.disconnect(true);
+	}
+
 	background.tilePosition.x -= 2;
+
+	if (game.input.pointer1.isDown) {
+		updateTime();
+	}
 
 	if ((keyInput.up.isDown || game.input.pointer1.isDown) && character.isJumping == false) {
 		Jump(character);

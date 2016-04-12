@@ -8,7 +8,6 @@ var allSockets = [];
 var players = [];
 var positions = [];
 var deadList = [];
-var monitorPosition = [];
 
 var count = 0
 
@@ -127,55 +126,6 @@ io.on('connection', function(socket) {
 		if (stored == false) {
 			positions.push(data);
 		}
-
-		var t_id = data[0];
-		var t_x = data[1];
-		var t_y = data[2];
-
-		monitorPosition.forEach(function(item) {
-			if (item[0] == t_id) {
-				if (item[1] == t_x && item[2] == t_y) {
-					item[3] = item[3] + 1;
-				}
-				else {
-					item[1] = t_x;
-					item[2] = t_y;
-					item[3] = 0;
-				}
-
-				if (item[3] >= 300) {
-					var result = null;
-					for (var i = 0; i < players.length; i++) {
-						if (t_id == players[i][1][0]) {
-							result = i;
-						}
-					}
-
-					if (result != null) {
-						var index = result;
-						result = players[result];
-						players.splice(index, 1);
-
-						if (deadList.indexOf(players[1]) == -1) {
-							startedAlive -= 1;
-						}
-
-						result[0].disconnect(true);
-
-						console.log("Force Disconnect: " + result[1][0])
-
-						socket.broadcast.emit("delete player", result);
-
-						if (startedAlive <= 0 && started == true) {
-							started = false;
-							startSeconds = startDelay;
-							io.emit('reset');
-						}
-					}
-				}
-			}
-		});
-
 	});
 
 	socket.on('player death', function(id) {
