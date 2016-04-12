@@ -13,6 +13,7 @@ var shift;
 var textJoin;
 var textTimer;
 var textConnected;
+var textWalls;
 
 var character;
 var keyInput;
@@ -89,11 +90,14 @@ function create() {
 	textJoin = game.add.text(game.world.width - 10, 10, text, style);
 	textJoin.x -= textJoin.width;
 
-	textConnected = game.add.text(game.world.width - 10, 30, "Connected:", style);
+	textConnected = game.add.text(game.world.width - 70, 30, "Connected:", style);
 
-	textTimer = game.add.text(game.world.width - 10, 50, "Timer:", style);
+	textTimer = game.add.text(game.world.width - 70, 50, "Timer:", style);
 
 	textDisconnected = game.add.text(-9000, screenHeight/2, "You have been disconnected from the server.", largeStyle)
+
+	textWalls = game.add.text(game.world.width - 70, 70, "Walls passed: 0", style);
+	textWalls.x = screenWidth - 10 - textWalls.width;
 
 	shift = Math.floor(Math.random() * 170);
 
@@ -166,8 +170,10 @@ function UpdateTimer(seconds) {
 	textTimer.x = screenWidth - 10 - textTimer.width;
 }
 
-function PositionMe() {
+function PositionMe(past) {
     PositionWalls(walls);
+	textWalls.text = "Walls passed: " + past;
+	textWalls.x = screenWidth - 10 - textWalls.width;
     emitted = false;
 }
 

@@ -21,6 +21,8 @@ var fruits = [];
 
 var inactiveTimer = 60;
 
+var wallsPast = 0;
+
 var stdin = process.openStdin();
 var listener = function() {
 	stdin.addListener("data", function(d) {
@@ -59,6 +61,7 @@ setInterval(function() {
 		startSeconds = startDelay;
 		started = true;
 		deadList = []
+		wallsPast = 0;
 	}
 	else if (started == true) {
 		io.emit('timer', -1);
@@ -113,7 +116,8 @@ io.on('connection', function(socket) {
         count = count + 1;
 
         if (count >= startedAlive) {
-            io.emit('position walls');
+            io.emit('position walls', wallsPast);
+			wallsPast += 1;
             count = 0;
         }
     });
