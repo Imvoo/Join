@@ -21,7 +21,6 @@ var keyInput;
 var style = { font: "20px Arial", fill:"White" };
 var nameStyle;
 
-var deathText;
 var userName;
 
 var textDisconnected;
@@ -340,8 +339,6 @@ function update() {
 
 	var collided = CheckCollision();
 	if (collided == true && character.alive == true) {
-		var style = { font: "20px Arial", fill:"White" };
-		deathText = game.add.text(0,0,"You have died!",style);
 		character.kill();
 		socket.emit('player death', id);
 	}

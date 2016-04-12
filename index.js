@@ -64,7 +64,7 @@ setInterval(function() {
 		startSeconds = startDelay;
 		started = true;
 		deadList = []
-		wallsPast = 0;
+		wallsPast = 1;
 	}
 	else if (started == true) {
 		io.emit('timer', -1);
