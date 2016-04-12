@@ -134,8 +134,8 @@ var SetupIOConnections = function() {
 }
 
 function UpdateTimer(seconds) {
-	if (seconds == "Started") {
-		textTimer.text = "Game has started!";
+	if (seconds == -1) {
+		textTimer.text = "Game has started! Please wait for it to end.";
 	}
 	else {
 		textTimer.text = "Timer: " + seconds.toString();
@@ -161,6 +161,14 @@ function Identify(inUrlID) {
     console.log(inUrlID);
     urlID = inUrlID[0];
     userName = inUrlID[1];
+
+	if (inUrlID[2] == true) {
+		startGameNow = true;
+	}
+	else {
+		startGameNow = false;
+	}
+
 	character.kill();
 
     character.userName.text = userName;

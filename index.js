@@ -57,7 +57,8 @@ setInterval(function() {
 		started = true;
 	}
 	else if (started == true) {
-		io.emit('start', 'Started');
+		var tmpVal = -1;
+		io.emit('start', tmpVal);
 	}
 	else {
 		startSeconds -= 1;
