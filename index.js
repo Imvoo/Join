@@ -19,7 +19,7 @@ var startedAlive = 0;
 var adjectives = [];
 var fruits = [];
 
-var inactiveTimer = 30;
+var inactiveTimer = 60;
 
 var stdin = process.openStdin();
 var listener = function() {
