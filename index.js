@@ -20,6 +20,8 @@ var startedAlive = 0;
 var adjectives = [];
 var fruits = [];
 
+var inactiveTimer = 30;
+
 var stdin = process.openStdin();
 var listener = function() {
 	stdin.addListener("data", function(d) {
@@ -71,6 +73,14 @@ setInterval(function() {
 			startSeconds = startDelay;
 			io.emit('reset')
 	}
+
+	players.forEach(function(player) {
+		player[2] = player[2] - 1;
+
+		if (player[2] <= 0) {
+			io.emit('logout', player[1][0]);
+		}
+	});
 }, 1000);
 
 function determineUsername() {
@@ -103,7 +113,7 @@ io.on('connection', function(socket) {
     });
 
 	socket.on('new player', function(id) {
-		players.push([socket.id, id]);
+		players.push([socket.id, id, inactiveTimer]);
 		socket.broadcast.emit('players', players);
 	});
 
@@ -114,6 +124,7 @@ io.on('connection', function(socket) {
 	// Data = id, x, y
 	socket.on('position', function(data) {
 		var stored = false;
+		var id = data[0];
 
 		positions.forEach(function(item) {
 			if (item[0] == data[0]) {
@@ -126,6 +137,12 @@ io.on('connection', function(socket) {
 		if (stored == false) {
 			positions.push(data);
 		}
+
+		players.forEach(function(player) {
+			if (player[1][0] == id) {
+				player[2] = inactiveTimer;
+			}
+		})
 	});
 
 	socket.on('player death', function(id) {

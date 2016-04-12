@@ -139,9 +139,16 @@ var SetupIOConnections = function() {
     socket.on('reset', ResetGame);
     socket.on('position walls', PositionMe);
 	socket.on('timer', UpdateTimer);
+	socket.on('logout', DisconnectPlayer);
 
 	// Netcode is really bad atm...
 	socket.on('player positions', UpdatePositions);
+}
+
+function DisconnectPlayer(inID) {
+	if (inID == id) {
+		socket.disconnect(true);
+	}
 }
 
 function UpdateTimer(seconds) {
@@ -289,7 +296,7 @@ function DeletePlayer(newID) {
 
 function update() {
 	if (Date.now() - timeBeginning > 30000) {
-		socket.disconnect(true);
+		DisconnectPlayer(id);
 	}
 
 	background.tilePosition.x -= 2;
