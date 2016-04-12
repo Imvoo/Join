@@ -314,7 +314,7 @@ function update() {
         socket.emit('jump', id);
 	}
 
-	if (keyInput.up.isUp && game.input.pointer1.isUp) {
+	if (keyInput.up.isUp && game.input.pointer1.isUp && game.input.activePointer.leftButton.isUp) {
 		character.isJumping = false;
 	}
 
