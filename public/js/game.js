@@ -82,6 +82,7 @@ function create() {
 	game.physics.p2.gravity.y = 980;
 
 	game.input.addPointer();
+	game.input.mouse.capture = true;
 
 	var text = "// Join | Click up arrow to jump!";
 
@@ -307,7 +308,7 @@ function update() {
 		updateTime();
 	}
 
-	if ((keyInput.up.isDown || game.input.pointer1.isDown) && character.isJumping == false) {
+	if ((keyInput.up.isDown || game.input.pointer1.isDown || game.input.activePointer.leftButton.isDown) && character.isJumping == false) {
 		Jump(character);
 		character.isJumping = true;
         socket.emit('jump', id);

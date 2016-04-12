@@ -10,7 +10,7 @@ var deadList = [];
 
 var count = 0
 
-var startDelay = 10;
+var startDelay = 5;
 var startSeconds = startDelay;
 
 var started = false;
