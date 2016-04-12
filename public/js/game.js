@@ -353,7 +353,7 @@ function MoveWalls(walls) {
 		item.x -= wallSpeed * game.time.physicsElapsed;
 	});
 
-	if (walls[0].x + walls[0].width < 0 && emitted == false) {
+	if (walls[0].x + walls[0].width < 0 && emitted == false && character.alive) {
 		socket.emit('wall finished');
         emitted = true;
 	}
