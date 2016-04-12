@@ -20,7 +20,7 @@ var startedAlive = 0;
 var adjectives = [];
 var fruits = [];
 
-var inactiveTimer = 30;
+var inactiveTimer = 60;
 
 var stdin = process.openStdin();
 var listener = function() {
@@ -83,6 +83,18 @@ setInterval(function() {
 	});
 }, 1000);
 
+function CheckInstable(id) {
+	setTimeout(function() {
+		positions.forEach(function (player) {
+			if (player[0] == id) {
+				if (player[2] == 200) {
+					io.emit('logout', player[0]);
+				}
+			}
+		});
+	}, 10000);
+}
+
 function determineUsername() {
     var random1 = Math.floor(Math.random() * adjectives.length - 1);
     var random2 = Math.floor(Math.random() * fruits.length - 1);
@@ -115,6 +127,7 @@ io.on('connection', function(socket) {
 	socket.on('new player', function(id) {
 		players.push([socket.id, id, inactiveTimer]);
 		socket.broadcast.emit('players', players);
+		CheckInstable(id[0]);
 	});
 
 	socket.on('jump', function(id) {

@@ -41,8 +41,6 @@ var startGameNow;
 
 var urlID;
 
-var followRules;
-
 var timeBeginning = Date.now();
 
 function updateTime(){
@@ -58,7 +56,6 @@ function preload() {
 function create() {
 	timeBeginning = Date.now();
 
-	followRules = false;
     emitted = false;
     nameStyle = {font: "12px Arial", fill:"White"};
 
@@ -259,13 +256,11 @@ function CreatePlayer(newID) {
 
             allPlayers.push([singleID[0], newChar, singleID[1]]);
 
-			if (followRules == false && (isDead == true || startGameNow == true)) {
+			if (isDead == true || startGameNow == true) {
 				newChar.kill();
 			}
         }
     });
-
-	followRules = true;
 
 	console.log("---------");
 	console.log(allPlayers);
@@ -295,7 +290,7 @@ function DeletePlayer(newID) {
 }
 
 function update() {
-	if (Date.now() - timeBeginning > 30000) {
+	if (Date.now() - timeBeginning > 60000) {
 		DisconnectPlayer(id);
 	}
 
