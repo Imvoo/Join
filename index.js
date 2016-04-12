@@ -19,7 +19,7 @@ var startedAlive = 0;
 var adjectives = [];
 var fruits = [];
 
-var inactiveTimer = 180;
+var inactiveTimer = 30;
 
 var stdin = process.openStdin();
 var listener = function() {
@@ -135,6 +135,12 @@ io.on('connection', function(socket) {
 
 	socket.on('jump', function(id) {
 		socket.broadcast.emit('jump', id);
+
+		players.forEach(function(player) {
+			if (player[1][0] == id) {
+				player[2] = inactiveTimer;
+			}
+		})
 	});
 
 	// Data = id, x, y
@@ -153,12 +159,6 @@ io.on('connection', function(socket) {
 		if (stored == false) {
 			positions.push(data);
 		}
-
-		players.forEach(function(player) {
-			if (player[1][0] == id) {
-				player[2] = inactiveTimer;
-			}
-		})
 	});
 
 	socket.on('player death', function(id) {

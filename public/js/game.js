@@ -148,14 +148,10 @@ var SetupIOConnections = function() {
 	socket.on('player positions', UpdatePositions);
 }
 
-window.onblur = function() {
-	socket.disconnect(true);
-	textDisconnected.x = screenWidth / 2 - (textDisconnected.width / 2);
-}
-
 function DisconnectPlayer(inID) {
 	if (inID == id) {
 		socket.disconnect(true);
+		textDisconnected.x = screenWidth / 2 - (textDisconnected.width / 2);
 	}
 }
 
