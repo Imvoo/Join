@@ -58,36 +58,44 @@ setInterval(function() {
 }, 5000);
 
 setInterval(function() {
-	if (startSeconds <= 0 && started == false) {
-		io.emit('start', value);
-		startedAlive = players.length;
-		startSeconds = startDelay;
-		started = true;
-		deadList = []
-		wallsPast = 0;
-	}
-	else if (started == true) {
-		io.emit('timer', -1);
-	}
-	else {
-		startSeconds -= 1;
-		io.emit('timer', startSeconds)
-	}
-
-	if (started == true && startedAlive <= 0) {
-			started = false;
+	if (players.length > 0) {
+		//	If the timer hits 0, start the game.
+		if (startSeconds <= 0 && started == false) {
+			io.emit('start', value);
+			startedAlive = players.length;
 			startSeconds = startDelay;
-			io.emit('reset');
-			deadList = [];
-	}
-
-	players.forEach(function(player) {
-		player[2] = player[2] - 1;
-
-		if (player[2] <= 0) {
-			io.emit('logout', player[1][0]);
+			started = true;
+			deadList = []
+			wallsPast = 0;
 		}
-	});
+		// 	Show game in progress if game has started.
+		else if (started == true) {
+			io.emit('timer', -1);
+		}
+		// 	Tick timer down if game hasn't started.
+		else {
+			startSeconds -= 1;
+			io.emit('timer', startSeconds)
+		}
+
+		// 	If game has started and there is no-one alive, restart the game.
+		if (started == true && startedAlive <= 0) {
+				started = false;
+				startSeconds = startDelay;
+				io.emit('reset');
+				deadList = [];
+		}
+
+		// 	Idle ticker for each player which will kick after a certain period
+		// 	of inactivity.
+		players.forEach(function(player) {
+			player[2] = player[2] - 1;
+
+			if (player[2] <= 0) {
+				io.emit('logout', player[1][0]);
+			}
+		});
+	}
 }, 1000);
 
 var tmpWarning = [];
@@ -259,6 +267,8 @@ http.listen(2345, function() {
 
 	var data = fs.readFileSync('./highscore.txt');
 	var array = data.toString().split("\n");
+
+
 	highscore = array[0];
 	highscorePlayer = array[1];
 
@@ -274,6 +284,8 @@ http.listen(2345, function() {
 
     // NETCODE TOO HARD FOR ME :'(
 	setInterval(function() {
-		io.emit("player positions", positions)
+		if (players.length > 0) {
+			io.emit("player positions", positions)
+		}
 	}, 1000/60);
 });
