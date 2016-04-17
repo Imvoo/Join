@@ -26,6 +26,8 @@ var highscorePlayer = "";
 
 var wallsPast = 0;
 
+var interval;
+
 var stdin = process.openStdin();
 var listener = function() {
 	stdin.addListener("data", function(d) {
@@ -118,6 +120,20 @@ function determineUsername() {
     var userName = adjectives[random1] + fruits[random2];
 
     return userName;
+}
+
+function UpdatePositions() {
+	setTimeout(function() {
+		if (players.length > 0) {
+			io.emit("player positions", positions)
+			interval = 1000/60;
+		}
+		else {
+			interval = 2000;
+		}
+
+		UpdatePositions();
+	}, interval);
 }
 
 io.on('connection', function(socket) {
@@ -283,9 +299,5 @@ http.listen(2345, function() {
 	// });
 
     // NETCODE TOO HARD FOR ME :'(
-	setInterval(function() {
-		if (players.length > 0) {
-			io.emit("player positions", positions)
-		}
-	}, 1000/60);
+	UpdatePositions();
 });
