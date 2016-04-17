@@ -134,7 +134,7 @@ function create() {
 
     setInterval(function() {
         socket.emit('position', [id, character.x, character.y]);
-    }, 1000/60);
+    }, 1000/20);
 }
 
 var SetupIOConnections = function() {

@@ -126,7 +126,7 @@ function UpdatePositions() {
 	setTimeout(function() {
 		if (players.length > 0) {
 			io.emit("player positions", positions)
-			interval = 1000/60;
+			interval = 1000/20;
 		}
 		else {
 			interval = 2000;
